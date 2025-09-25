@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Machine Learning & AI Instructor",
+    "company": "Artificial Intelligence Bangladesh",
+    "location": "High Tech Park, Silicon Tower, Rajshahi, Bangladesh",
+    "period": "March 2024 – Present",
+    "website": "aibd.ai",
+    "description": [
+      "Conducted hands-on training sessions on Machine Learning, Deep Learning, Computer Vision and Data Science",
+      "Designed and delivered course materials covering supervised/unsupervised learning, model evaluation, and deployment workflows",
+      "Mentored learners through practical projects, improving their problem-solving and coding skills in Python and ML frameworks",
+      "Collaborated with AI Bangladesh community initiatives to expand outreach and promote applied AI education"
+    ],
+    "featured": true
+  },
+  {
+    "title": "President",
+    "company": "RUET IoT Club",
+    "location": "Rajshahi University of Engineering & Technology, Bangladesh",
+    "period": "Feb 2025 – Present",
+    "website": "ruetiotclub.org",
+    "description": [
+      "Organized workshops and events on IoT and smart technologies",
+      "Coordinated technical sessions focusing on innovation, automation, and advanced IoT applications",
+      "Collaborated with student bodies to enhance hands-on learning and technical collaboration"
+    ]
+  },
+  {
+    "title": "Research Assistant",
+    "company": "Machine Learning Research Group",
+    "location": "Department of CSE, RUET, Rajshahi-6204, Bangladesh",
+    "period": "Jul 2024 – Present",
+    "supervisor": "Assistant Prof. SM Mehedi Hasan",
+    "description": [
+      "Engaged in machine learning research with focus on sentiment analysis and predictive modeling",
+      "Co-authored papers accepted at ICCIT 2024 on social media bias and time-series forecasting",
+      "Developed ML/DL models for detecting sentiment and geopolitical bias in social media text"
+    ]
+  },
+  {
+    "title": "Campus Representative",
+    "company": "FutureNation Volunteer",
+    "location": "RUET, Rajshahi, Bangladesh",
+    "period": "Jun 2025 – Present",
+    "website": "futurenation.gov.bd",
+    "description": [
+      "Organized and facilitated FutureNation programs and workshops within the RUET campus",
+      "Led university-level initiatives to engage students in skill-building and youth empowerment projects",
+      "Collaborated with FutureNation teams and partner organizations to ensure impactful program execution"
+    ]
+  }
+]

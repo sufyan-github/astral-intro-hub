@@ -1,40 +1,50 @@
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, ExternalLink, Users, Calendar } from "lucide-react";
 
-const Research = () => {
-  const publications = [
-    {
-      title: "A Cross-Analyzing Approach to Sentiment and Bias Detection in Social Media: Insights from Geopolitical Conflicts",
-      conference: "ICCiT 2024",
-      location: "Cox's Bazar, Bangladesh",
-      year: "2024",
-      type: "Conference Paper",
-      description: "Developed advanced ML/DL models for detecting sentiment and geopolitical bias in social media content, providing insights into information warfare and public opinion manipulation during conflicts.",
-      keywords: ["Sentiment Analysis", "Bias Detection", "Social Media", "Machine Learning", "NLP"]
-    },
-    {
-      title: "Improving Monkeypox Outbreak Prediction Through Time-Series Forecasting with Machine Learning Models",
-      conference: "ICCiT 2024", 
-      location: "Cox's Bazar, Bangladesh",
-      year: "2024",
-      type: "Conference Paper",
-      description: "Built sophisticated forecasting models using LSTM, GRU, and ensemble methods to predict Monkeypox outbreak trends, contributing to public health preparedness and response strategies.",
-      keywords: ["Time Series Forecasting", "LSTM", "GRU", "Healthcare Analytics", "Predictive Modeling"]
-    }
-  ];
+// =====================================================
+// JSON‑DRIVEN RESEARCH SECTION
+// Make sure tsconfig.json has:
+//   "resolveJsonModule": true,
+//   "esModuleInterop": true
+// Create these files and adjust paths as you like:
+//   - src/data/publications.json
+//   - src/data/research_interests.json
+//   - src/data/ra_profile.json
+// =====================================================
 
-  const researchInterests = [
-    "Machine Learning",
-    "Deep Learning", 
-    "Computer Vision",
-    "Sentiment Analysis",
-    "Time-Series Forecasting",
-    "Predictive Modeling",
-    "Natural Language Processing",
-    "AI for Social Good"
-  ];
+import publications from "@/data/publications.json";
+import researchInterests from "@/data/research_interests.json";
+import raInfo from "@/data/ra_profile.json";
+
+// ===== Types that mirror the JSON shape =====
+export type Publication = {
+  title: string;
+  conference: string;
+  location?: string;
+  year: string;
+  type: string; // e.g., "Conference Paper"
+  description: string;
+  keywords?: string[];
+  paperUrl?: string;       // optional: link to PDF or arXiv
+  conferenceUrl?: string;  // optional: link to conference page
+};
+
+export type RAProfile = {
+  positionTitle: string; // e.g., "Research Assistant"
+  groupName?: string;    // e.g., "Machine Learning Research Group"
+  deptLine?: string;     // e.g., "Department of CSE, RUET, Rajshahi-6204, Bangladesh"
+  supervisorName?: string;
+  profileUrl?: string;   // optional CTA link
+  ctaText?: string;      // optional button label (defaults to "View Research Profile")
+};
+
+const Research: React.FC = () => {
+  const pubs = publications as Publication[];
+  const interests = researchInterests as string[];
+  const ra = raInfo as RAProfile;
 
   return (
     <section id="research" className="py-20 bg-gradient-secondary">
@@ -53,9 +63,9 @@ const Research = () => {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap justify-center gap-3">
-              {researchInterests.map((interest, index) => (
-                <Badge 
-                  key={index}
+              {interests.map((interest, index) => (
+                <Badge
+                  key={interest + index}
                   className="bg-gradient-primary text-primary-foreground px-4 py-2 text-sm hover-lift animate-scale-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
@@ -68,18 +78,16 @@ const Research = () => {
 
         {/* Publications */}
         <div className="space-y-8">
-          {publications.map((paper, index) => (
-            <Card 
-              key={index}
+          {pubs.map((paper, index) => (
+            <Card
+              key={paper.title + index}
               className="hover-lift glow-border bg-card/50 backdrop-blur-sm border-primary shadow-glow animate-slide-up"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <CardHeader>
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                   <div className="flex-1">
-                    <CardTitle className="text-xl mb-3 leading-relaxed">
-                      {paper.title}
-                    </CardTitle>
+                    <CardTitle className="text-xl mb-3 leading-relaxed">{paper.title}</CardTitle>
                     <div className="flex flex-wrap items-center gap-4 mb-4">
                       <Badge className="bg-gradient-accent text-accent-foreground">
                         <FileText className="h-4 w-4 mr-1" />
@@ -94,38 +102,46 @@ const Research = () => {
                         {paper.year}
                       </div>
                     </div>
-                    <p className="text-sm text-accent mb-4">{paper.location}</p>
+                    {paper.location && (
+                      <p className="text-sm text-accent mb-4">{paper.location}</p>
+                    )}
                   </div>
                 </div>
               </CardHeader>
-              
-              <CardContent>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {paper.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {paper.keywords.map((keyword, keyIndex) => (
-                    <Badge 
-                      key={keyIndex}
-                      variant="secondary"
-                      className="hover-lift animate-scale-in"
-                      style={{ animationDelay: `${(index * 3 + keyIndex) * 0.05}s` }}
-                    >
-                      {keyword}
-                    </Badge>
-                  ))}
-                </div>
 
-                <div className="flex space-x-3">
-                  <Button variant="outline" size="sm" className="glow-border hover-lift">
-                    <FileText className="h-4 w-4 mr-2" />
-                    Read Paper
-                  </Button>
-                  <Button variant="outline" size="sm" className="glow-border hover-lift">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Conference
-                  </Button>
+              <CardContent>
+                <p className="text-muted-foreground mb-6 leading-relaxed">{paper.description}</p>
+
+                {paper.keywords && paper.keywords.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {paper.keywords.map((keyword, keyIndex) => (
+                      <Badge
+                        key={keyword + keyIndex}
+                        variant="secondary"
+                        className="hover-lift animate-scale-in"
+                        style={{ animationDelay: `${(index * 3 + keyIndex) * 0.05}s` }}
+                      >
+                        {keyword}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-3">
+                  {paper.paperUrl && (
+                    <Button asChild variant="outline" size="sm" className="glow-border hover-lift">
+                      <a href={paper.paperUrl} target="_blank" rel="noreferrer">
+                        <FileText className="h-4 w-4 mr-2" /> Read Paper
+                      </a>
+                    </Button>
+                  )}
+                  {paper.conferenceUrl && (
+                    <Button asChild variant="outline" size="sm" className="glow-border hover-lift">
+                      <a href={paper.conferenceUrl} target="_blank" rel="noreferrer">
+                        <ExternalLink className="h-4 w-4 mr-2" /> Conference
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -135,21 +151,25 @@ const Research = () => {
         {/* Research Assistant Info */}
         <Card className="mt-12 hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
           <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold mb-4">Current Research Position</h3>
-            <p className="text-lg text-muted-foreground mb-4">
-              Research Assistant at Machine Learning Research Group
-            </p>
-            <p className="text-muted-foreground mb-4">
-              Department of Computer Science & Engineering, RUET, Rajshahi-6204, Bangladesh
-            </p>
-            <p className="text-sm text-accent">
-              Supervised by: Assistant Prof. SM Mehedi Hasan
-            </p>
-            <div className="mt-6">
-              <Button className="bg-gradient-primary hover:shadow-glow">
-                View Research Profile
-              </Button>
-            </div>
+            <h3 className="text-2xl font-bold mb-4">{ra.positionTitle}</h3>
+            {ra.groupName && (
+              <p className="text-lg text-muted-foreground mb-4">{ra.groupName}</p>
+            )}
+            {ra.deptLine && (
+              <p className="text-muted-foreground mb-4">{ra.deptLine}</p>
+            )}
+            {ra.supervisorName && (
+              <p className="text-sm text-accent">Supervised by: {ra.supervisorName}</p>
+            )}
+            {ra.profileUrl && (
+              <div className="mt-6">
+                <Button asChild className="bg-gradient-primary hover:shadow-glow">
+                  <a href={ra.profileUrl} target="_blank" rel="noreferrer">
+                    {ra.ctaText ?? "View Research Profile"}
+                  </a>
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

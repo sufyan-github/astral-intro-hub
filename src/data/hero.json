@@ -1,0 +1,19 @@
+{
+  "name": "Md. Abu Sufyan",
+  "title": "Machine Learning & AI Instructor | Computer Science Engineer",
+  "summary": "Driven by a passion for technology and innovation, I specialize in Machine Learning, Deep Learning, and Computer Vision. Currently pursuing BSc in Computer Science & Engineering at RUET with a focus on AI research and community impact.",
+  "chips": [
+    { "icon": "brain", "text": "AI & Machine Learning" },
+    { "icon": "cpu",   "text": "IoT Development" },
+    { "icon": "db",    "text": "Data Science" }
+  ],
+  "socials": [
+    { "label": "Email",    "type": "email",    "href": "abusufyan.cse20@gmail.com" },
+    { "label": "LinkedIn", "type": "linkedin", "href": "https://linkedin.com/in/md-abu-sufyan" },
+    { "label": "GitHub",   "type": "github",   "href": "https://github.com/sufyan-github" }
+  ],
+  "ctas": [
+    { "label": "View My Work", "targetId": "projects" }
+  ],
+  "showBackgroundIcons": true
+}

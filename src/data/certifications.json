@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "title": "Certificate of Registration — BEAR Summit & National Semiconductor Symposium 2025",
+    "issuer": "BEAR Summit / National Semiconductor Symposium",
+    "date": "2025-07-17",
+    "description": "Registration completed for the BEAR Summit and National Semiconductor Symposium 2025 at NST Complex, Dhaka (16–17 July 2025).",
+    "image": "/certs/semiconductor_2025.png",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Semiconductor", "Conference", "Registration"]
+  },
+  {
+    "id": 2,
+    "title": "Prompt Engineering Applications",
+    "issuer": "Simplilearn SkillUp",
+    "date": "2025-06-12",
+    "description": "Online course on prompt engineering techniques and applications.",
+    "image": "/certs/prompt_engineering_2025.png",
+    "credentialId": "8456834",
+    "verificationUrl": "#",
+    "skills": ["Prompt Engineering", "LLMs"]
+  },
+  {
+    "id": 3,
+    "title": "ChatGPT for Customer Support",
+    "issuer": "Simplilearn SkillUp",
+    "date": "2025-05-26",
+    "description": "Using ChatGPT to enhance support workflows and customer experience.",
+    "image": "/certs/chatgpt_customer_support_2025.png",
+    "credentialId": "8392838",
+    "verificationUrl": "#",
+    "skills": ["Customer Support", "ChatGPT", "Automation"]
+  },
+  {
+    "id": 4,
+    "title": "Agile Scrum Foundation",
+    "issuer": "Simplilearn SkillUp",
+    "date": "2025-06-11",
+    "description": "Foundation of Agile values, Scrum roles, events and artifacts.",
+    "image": "/certs/agile_scrum_foundation_2025.png",
+    "credentialId": "8453784",
+    "verificationUrl": "#",
+    "skills": ["Agile", "Scrum", "Project Management"]
+  },
+  {
+    "id": 5,
+    "title": "Intro to Machine Learning",
+    "issuer": "Kaggle",
+    "date": "2024-06-30",
+    "description": "Completed the Intro to Machine Learning course (Kaggle Learn).",
+    "image": "/certs/kaggle_intro_ml_2024-06-30.png",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Machine Learning", "Modeling", "Pandas"]
+  },
+  {
+    "id": 6,
+    "title": "Intro to Machine Learning",
+    "issuer": "Kaggle",
+    "date": "2024-07-09",
+    "description": "Completed the Intro to Machine Learning course (second completion).",
+    "image": "/certs/kaggle_intro_ml_2024-07-09.png",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Machine Learning", "Modeling", "Pandas"]
+  },
+  {
+    "id": 7,
+    "title": "Crash Course on Python",
+    "issuer": "Interactive Cares",
+    "date": "2024",
+    "description": "Crash course covering Python fundamentals and practical problem solving.",
+    "image": "/certs/python_crash_course.png",
+    "credentialId": "b7e46dc9-cbdb-4698-8a74-137156404f09",
+    "verificationUrl": "#",
+    "skills": ["Python", "Programming Basics"]
+  },
+  {
+    "id": 8,
+    "title": "PHP (Laravel) Training — 80 Hours",
+    "issuer": "RUET CSE / BCC EDGE Project",
+    "date": "2025-02-17",
+    "description": "Completed 80-hour PHP (Laravel) training held May 2024–Feb 2025 under the EDGE Project.",
+    "image": "/certs/edge_php_laravel_2025.jpg",
+    "credentialId": "EDGE-DSTS-116-6652-00007",
+    "verificationUrl": "#",
+    "skills": ["PHP", "Laravel", "Web Development"]
+  },
+  {
+    "id": 9,
+    "title": "Generative AI for Educators",
+    "issuer": "Google",
+    "date": "2025",
+    "description": "Certificate for the Generative AI for Educators program.",
+    "image": "/certs/gen_ai_educators_google.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Generative AI", "Education Technology"]
+  },
+  {
+    "id": 10,
+    "title": "ICT Olympiad — Participation (Season 2)",
+    "issuer": "ICT Olympiad Bangladesh",
+    "date": "2025",
+    "description": "Participation certificate based on active and significant learning.",
+    "image": "/certs/ict_olympiad_participant.jpg",
+    "credentialId": "2025579056",
+    "verificationUrl": "#",
+    "skills": ["Community", "Engagement"]
+  },
+  {
+    "id": 11,
+    "title": "Typing Test — 37 WPM (91%)",
+    "issuer": "Typing.com",
+    "date": "2024-11-04",
+    "description": "Typing speed test result (1 minute).",
+    "image": "/certs/typing_37wpm_2024.png",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Typing", "Productivity"]
+  },
+  {
+    "id": 12,
+    "title": "Typing Test — 38 WPM (94%)",
+    "issuer": "Typing.com",
+    "date": "2024-11-06",
+    "description": "Typing speed test result (1 minute).",
+    "image": "/certs/typing_38wpm_2024.png",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Typing", "Productivity"]
+  },
+  {
+    "id": 13,
+    "title": "Basic Networking Exam",
+    "issuer": "Cisco Networking Academy",
+    "date": "2023",
+    "description": "Fundamental networking concepts, protocols, and configuration principles.",
+    "image": "/certs/cisco_basic_networking.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Networking", "TCP/IP", "Routing", "Security"]
+  },
+  {
+    "id": 14,
+    "title": "Workplace Communication Essentials",
+    "issuer": "Generation Unlimited (P2E Bangladesh)",
+    "date": "2024-05-21",
+    "description": "Professional communication skills and collaborative work methods.",
+    "image": "/certs/workplace_communication_essentials_2024.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Communication", "Presentation", "Collaboration"]
+  },
+  {
+    "id": 15,
+    "title": "Art of Problem Definition",
+    "issuer": "Generation Unlimited (P2E Bangladesh)",
+    "date": "2024-12-17",
+    "description": "Strategic problem-solving methodologies and analytical thinking.",
+    "image": "/certs/art_of_problem_definition_2024.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["Problem Solving", "Critical Thinking", "Analysis", "Strategy"]
+  },
+  {
+    "id": 16,
+    "title": "The SDG Primer",
+    "issuer": "UNDP Bangladesh",
+    "date": "2025-02-05",
+    "description": "Understanding Sustainable Development Goals and their implementation.",
+    "image": "/certs/sdg_primer_2025.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["SDGs", "Policy", "Social Impact"]
+  },
+  {
+    "id": 17,
+    "title": "App Development with Flutter",
+    "issuer": "Ostad",
+    "date": "2024",
+    "description": "Comprehensive course covering Flutter framework, Dart, and mobile app development best practices.",
+    "image": "/certs/flutter_ostad_2024.jpg",
+    "credentialId": "C11352",
+    "verificationUrl": "#",
+    "skills": ["Flutter", "Dart", "Mobile Development", "UI/UX"]
+  },
+  {
+    "id": 18,
+    "title": "CAPM® Certification",
+    "issuer": "Project Management Institute (PMI)",
+    "date": "2024",
+    "description": "Certified Associate in Project Management — fundamentals and terminology.",
+    "image": "/certs/capm_course_2024.jpg",
+    "credentialId": "PMI-CAPM-2024-001",
+    "verificationUrl": "#",
+    "skills": ["Project Management", "Risk Assessment", "Stakeholder Management"]
+  },
+  {
+    "id": 19,
+    "title": "Preparatory Online Training on IELTS Speaking Module — Participant",
+    "issuer": "FutureNation / UNDP Bangladesh",
+    "date": "2025-09-03",
+    "description": "Participant certificate for the IELTS Speaking Module training.",
+    "image": "/certs/ielts_speaking_module_2025.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["IELTS Speaking", "Communication"]
+  },
+  {
+    "id": 20,
+    "title": "AI Agent for Beginners",
+    "issuer": "—",
+    "date": "2025",
+    "description": "Introductory certificate on building and understanding AI agents.",
+    "image": "/certs/ai_agent_beginners.jpg",
+    "credentialId": "",
+    "verificationUrl": "#",
+    "skills": ["AI Agents", "GenAI"]
+  }
+]

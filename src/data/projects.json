@@ -1,0 +1,26 @@
+[
+  {
+    "id": "p01",
+    "title": "Smart Traffic Management with YOLOv8",
+    "description": "Dynamic signal control using real-time object detection and queue length estimation.",
+    "technologies": ["Python", "YOLOv8", "OpenCV", "Flask"],
+    "project_type": "AI/ML",
+    "year": "2025",
+    "featured": true,
+    "github_url": "https://github.com/you/smart-traffic",
+    "demo_url": "https://demo.example.com/traffic",
+    "image_url": "/projects/traffic.jpg"
+  },
+  {
+    "id": "p02",
+    "title": "HealthTracker — Flutter Mobile App",
+    "description": "Cross-platform app for activity tracking and analytics; Firebase auth and Firestore.",
+    "technologies": ["Flutter", "Dart", "Firebase"],
+    "project_type": "Mobile",
+    "year": "2024",
+    "featured": false,
+    "github_url": "https://github.com/you/healthtracker",
+    "demo_url": "#",
+    "image_url": "/projects/healthtracker.png"
+  }
+]

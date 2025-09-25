@@ -1,0 +1,24 @@
+[
+  {
+    "title": "A Cross-Analyzing Approach to Sentiment and Bias Detection in Social Media: Insights from Geopolitical Conflicts",
+    "conference": "ICCiT 2024",
+    "location": "Cox's Bazar, Bangladesh",
+    "year": "2024",
+    "type": "Conference Paper",
+    "description": "Developed advanced ML/DL models for detecting sentiment and geopolitical bias in social media content, providing insights into information warfare and public opinion manipulation during conflicts.",
+    "keywords": ["Sentiment Analysis", "Bias Detection", "Social Media", "Machine Learning", "NLP"],
+    "paperUrl": "",
+    "conferenceUrl": ""
+  },
+  {
+    "title": "Improving Monkeypox Outbreak Prediction Through Time-Series Forecasting with Machine Learning Models",
+    "conference": "ICCiT 2024",
+    "location": "Cox's Bazar, Bangladesh",
+    "year": "2024",
+    "type": "Conference Paper",
+    "description": "Built sophisticated forecasting models using LSTM, GRU, and ensemble methods to predict Monkeypox outbreak trends, contributing to public health preparedness and response strategies.",
+    "keywords": ["Time Series Forecasting", "LSTM", "GRU", "Healthcare Analytics", "Predictive Modeling"],
+    "paperUrl": "",
+    "conferenceUrl": ""
+  }
+]

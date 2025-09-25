@@ -1,0 +1,32 @@
+[
+  {
+    "icon": "Mail",
+    "label": "Email",
+    "value": "abusufyan.cse20@gmail.com",
+    "link": "mailto:abusufyan.cse20@gmail.com"
+  },
+  {
+    "icon": "Phone",
+    "label": "Phone",
+    "value": "+880 1580 352238",
+    "link": "tel:+8801580352238"
+  },
+  {
+    "icon": "MapPin",
+    "label": "Location",
+    "value": "Rajshahi, Bangladesh",
+    "link": null
+  },
+  {
+    "icon": "Linkedin",
+    "label": "LinkedIn",
+    "value": "md-abu-sufyan",
+    "link": "https://linkedin.com/in/md-abu-sufyan"
+  },
+  {
+    "icon": "Github",
+    "label": "GitHub",
+    "value": "sufyan-github",
+    "link": "https://github.com/sufyan-github"
+  }
+]

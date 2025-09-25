@@ -20,7 +20,20 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       {/* 3D Particle Background Animation */}
-      <ParticleBackground density={1.2} interactive={true} />
+      <ParticleBackground
+  density={1}          // 0.5–1.2 is comfy
+  speed={1}            // 0.8 for calmer
+  maxDepth={250}
+  interactive={true}
+  blendMode="screen"   // or "lighter"
+  colors={[
+    "hsl(212, 100%, 65%)",
+    "hsl(270, 60%, 45%)",
+    "hsl(189, 100%, 60%)",
+  ]}
+  icons={["🧠","💻","🤖","⚡","🌐"]}
+/>
+
       
       {/* Floating Tech Elements */}
       <FloatingTechElements />

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Academic Excellence",
+    "subtitle": "CGPA 3.68/4.00",
+    "description": "Maintained consistently high academic performance throughout Computer Science & Engineering degree",
+    "icon": "Trophy",
+    "category": "Academic",
+    "date": "2021-2025",
+    "color": "text-yellow-500"
+  },
+  {
+    "id": 2,
+    "title": "Project Leadership",
+    "subtitle": "Led 5+ Major Projects",
+    "description": "Successfully led cross-functional teams in developing innovative AI/ML solutions and web applications",
+    "icon": "Users",
+    "category": "Leadership",
+    "date": "2023-2024",
+    "color": "text-blue-500"
+  },
+  {
+    "id": 3,
+    "title": "Open Source Contributor",
+    "subtitle": "500+ GitHub Contributions",
+    "description": "Active contributor to open-source projects with consistent coding activity and community engagement",
+    "icon": "Code",
+    "category": "Development",
+    "date": "2022-Present",
+    "color": "text-green-500"
+  },
+  {
+    "id": 4,
+    "title": "Research Publications",
+    "subtitle": "3 Published Papers",
+    "description": "Published research papers in Machine Learning, Computer Vision, and Sentiment Analysis domains",
+    "icon": "Presentation",
+    "category": "Research",
+    "date": "2023-2024",
+    "color": "text-purple-500"
+  },
+  {
+    "id": 5,
+    "title": "Technical Certifications",
+    "subtitle": "7+ Professional Certifications",
+    "description": "Earned certifications from PMI, Cisco, Kaggle, and other renowned organizations",
+    "icon": "Award",
+    "category": "Certification",
+    "date": "2023-2025",
+    "color": "text-red-500"
+  },
+  {
+    "id": 6,
+    "title": "Innovation Award",
+    "subtitle": "Best AI Project 2024",
+    "description": "Received recognition for innovative machine learning solution in university competition",
+    "icon": "Star",
+    "category": "Recognition",
+    "date": "2024",
+    "color": "text-orange-500"
+  },
+  {
+    "id": 7,
+    "title": "Community Impact",
+    "subtitle": "Mentored 50+ Students",
+    "description": "Actively mentoring junior students in programming, AI/ML concepts, and career development",
+    "icon": "Target",
+    "category": "Community",
+    "date": "2022-Present",
+    "color": "text-indigo-500"
+  },
+  {
+    "id": 8,
+    "title": "Hackathon Winner",
+    "subtitle": "2x Competition Winner",
+    "description": "Won multiple hackathons and coding competitions with innovative solutions and team collaboration",
+    "icon": "Medal",
+    "category": "Competition",
+    "date": "2023-2024",
+    "color": "text-pink-500"
+  }
+]

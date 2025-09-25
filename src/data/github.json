@@ -1,0 +1,12 @@
+{
+  "username": "sufyan-github",
+  "stats": [
+    { "label": "Public Repos",   "value": "25+", "icon": "repos" },
+    { "label": "Total Commits",  "value": "500+", "icon": "commits" },
+    { "label": "Contributions",  "value": "365+", "icon": "contribs" },
+    { "label": "Stars Earned",   "value": "50+", "icon": "stars" }
+  ],
+  "theme": "auto",
+  "fontSize": 12,
+  "profileUrl": "https://github.com/sufyan-github"
+}

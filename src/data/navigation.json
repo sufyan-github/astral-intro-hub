@@ -1,0 +1,15 @@
+{
+  "siteTitle": "Abu Sufyan",
+  "cvUrl": "/cv/Abu_Sufyan_CV.pdf",
+  "cvFileName": "Abu_Sufyan_CV.pdf",
+  "enableActiveHighlight": true,
+  "items": [
+    { "name": "Home", "href": "#home" },
+    { "name": "About", "href": "#about" },
+    { "name": "Experience", "href": "#experience" },
+    { "name": "Skills", "href": "#skills" },
+    { "name": "Projects", "href": "#projects" },
+    { "name": "Research", "href": "#research" },
+    { "name": "Contact", "href": "#contact" }
+  ]
+}

@@ -1,17 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GraduationCap, MapPin, Phone, Mail } from "lucide-react";
+import aboutData from "@/data/about.json";
 
 const About = () => {
-  const interests = [
-    "Machine Learning", "Deep Learning", "Computer Vision", 
-    "Sentiment Analysis", "Time-Series Forecasting", "Predictive Modeling"
-  ];
-
-  const languages = [
-    { name: "Bangla", level: "Native fluency" },
-    { name: "English", level: "Full professional proficiency" }
-  ];
+  const { education, personal, interests, languages, softSkills } = aboutData;
 
   return (
     <section id="about" className="py-20 bg-gradient-secondary">
@@ -35,33 +28,35 @@ const About = () => {
               <div className="space-y-6">
                 <div>
                   <h4 className="text-lg font-semibold text-primary mb-2">
-                    Bachelor of Science in Computer Science & Engineering
+                    {education.degree}
                   </h4>
                   <p className="text-muted-foreground mb-1">
-                    Rajshahi University of Engineering & Technology (RUET)
+                    {education.institution}
                   </p>
-                  <p className="text-sm text-accent">CGPA: 3.68 / 4.00 | 2021 - 2025</p>
+                  <p className="text-sm text-accent">
+                    CGPA: {education.cgpa} | {education.years}
+                  </p>
                 </div>
 
                 <div className="pt-4 border-t border-border">
                   <div className="flex items-center text-muted-foreground mb-2">
                     <MapPin className="h-4 w-4 mr-2" />
-                    Bangabandhu Sheikh Mujibur Rahman Hall, RUET, Rajshahi, Bangladesh
+                    {personal.address}
                   </div>
                   <div className="flex items-center text-muted-foreground mb-2">
                     <Phone className="h-4 w-4 mr-2" />
-                    +880 1580 352238
+                    {personal.phone}
                   </div>
                   <div className="flex items-center text-muted-foreground">
                     <Mail className="h-4 w-4 mr-2" />
-                    abusufyan.cse20@gmail.com
+                    {personal.email}
                   </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Interests & Languages */}
+          {/* Interests, Languages & Skills */}
           <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm">
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold mb-6">Research Interests</h3>
@@ -91,8 +86,7 @@ const About = () => {
               <div className="mt-8 pt-6 border-t border-border">
                 <h4 className="font-semibold mb-3">Soft Skills</h4>
                 <p className="text-muted-foreground">
-                  Team Leadership • Technical Communication • Public Speaking • 
-                  Project Planning • Event Management
+                  {softSkills.join(" • ")}
                 </p>
               </div>
             </CardContent>
