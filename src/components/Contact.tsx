@@ -30,15 +30,16 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('contacts')
-        .insert([formData]);
+      // Call the edge function to send email
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
 
       if (error) throw error;
 
       toast({
         title: "Message sent successfully!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
+        description: "Thanks for reaching out. I'll get back to you soon. Check your email for confirmation.",
       });
 
       // Reset form
@@ -49,15 +50,8 @@ const Contact = () => {
         message: ''
       });
 
-      // Track analytics
-      supabase.from('analytics').insert([
-        {
-          event_type: 'contact_form_submission',
-          metadata: { subject: formData.subject }
-        }
-      ]);
-
     } catch (error) {
+      console.error('Contact form error:', error);
       toast({
         title: "Error sending message",
         description: "Something went wrong. Please try again.",

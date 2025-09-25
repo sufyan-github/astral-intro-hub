@@ -177,6 +177,18 @@ All colors MUST be HSL.
     transform-style: preserve-3d;
   }
 
+  /* AI/ML/IoT Themed 3D Elements */
+  .ai-brain-cube, .iot-chip-cube, .ml-network-cube, 
+  .data-cube, .iot-wifi-cube, .ai-globe-cube {
+    @apply absolute p-3 rounded-lg backdrop-blur-sm;
+    background: linear-gradient(135deg, 
+      hsl(var(--card)) 0%, 
+      hsla(var(--primary), 0.1) 50%, 
+      hsl(var(--card)) 100%);
+    border: 1px solid hsla(var(--primary), 0.2);
+    transform-style: preserve-3d;
+  }
+
   /* Gradient Text Effect */
   .gradient-text {
     background: var(--gradient-primary);
