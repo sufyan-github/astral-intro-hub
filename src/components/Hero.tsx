@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import ResumeDownload from "@/components/ResumeDownload";
 
 const Hero = () => {
   return (
@@ -49,9 +50,7 @@ const Hero = () => {
             <Button size="lg" className="bg-gradient-primary hover:shadow-glow animate-pulse-glow">
               View My Work
             </Button>
-            <Button variant="outline" size="lg" className="glow-border hover-lift">
-              Download CV
-            </Button>
+            <ResumeDownload />
           </div>
 
           {/* Scroll Indicator */}

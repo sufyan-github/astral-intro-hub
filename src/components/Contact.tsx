@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, MapPin, Linkedin, Github, Send } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -21,10 +25,47 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setLoading(true);
+
+    try {
+      const { error } = await supabase
+        .from('contacts')
+        .insert([formData]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent successfully!",
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+
+      // Track analytics
+      supabase.from('analytics').insert([
+        {
+          event_type: 'contact_form_submission',
+          metadata: { subject: formData.subject }
+        }
+      ]);
+
+    } catch (error) {
+      toast({
+        title: "Error sending message",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -205,13 +246,14 @@ const Contact = () => {
                   />
                 </div>
                 
-                <Button 
-                  type="submit" 
-                  size="lg" 
-                  className="w-full bg-gradient-primary hover:shadow-glow animate-pulse-glow"
-                >
-                  <Send className="h-5 w-5 mr-2" />
-                  Send Message
+                 <Button 
+                   type="submit" 
+                   size="lg" 
+                   disabled={loading}
+                   className="w-full bg-gradient-primary hover:shadow-glow animate-pulse-glow"
+                 >
+                   <Send className="h-5 w-5 mr-2" />
+                   {loading ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </CardContent>

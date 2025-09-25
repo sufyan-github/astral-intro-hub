@@ -1,49 +1,79 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Calendar } from "lucide-react";
+import { Github, ExternalLink, Calendar, Code, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  project_type: string;
+  year: string;
+  featured: boolean;
+  github_url: string | null;
+  demo_url: string | null;
+  image_url: string | null;
+}
+
+// Tech logo component for project technologies
+const TechLogo = ({ name }: { name: string }) => {
+  const getTechIcon = (techName: string) => {
+    const name = techName.toLowerCase();
+    if (name.includes('yolo') || name.includes('detection')) return '🎯';
+    if (name.includes('mobilenet') || name.includes('resnet')) return '📱';
+    if (name.includes('python')) return '🐍';
+    if (name.includes('computer vision')) return '👁️';
+    if (name.includes('machine learning') || name.includes('ml')) return '🤖';
+    if (name.includes('deep learning') || name.includes('dl')) return '🧠';
+    if (name.includes('nlp')) return '💬';
+    if (name.includes('lstm') || name.includes('gru')) return '🔄';
+    if (name.includes('time series')) return '📈';
+    if (name.includes('healthcare')) return '🏥';
+    if (name.includes('flutter')) return '💙';
+    if (name.includes('dart')) return '🎯';
+    if (name.includes('firebase')) return '🔥';
+    if (name.includes('react')) return '⚛️';
+    if (name.includes('tailwind')) return '🎨';
+    if (name.includes('node')) return '💚';
+    if (name.includes('express')) return '🚀';
+    if (name.includes('mysql')) return '🗃️';
+    if (name.includes('php') || name.includes('laravel')) return '🐘';
+    return '💻';
+  };
+
+  return (
+    <span className="text-sm mr-1">
+      {getTechIcon(name)}
+    </span>
+  );
+};
 
 const Projects = () => {
-  const projects = [
-    {
-      title: "Traffic Sign Detection System",
-      year: "2025",
-      description: "Real-time detection of traffic signs using YOLOv8, MobileNet, and ResNet. Deployed on a web interface with live video processing support.",
-      technologies: ["YOLOv8", "MobileNet", "ResNet", "Python", "Web Interface", "Computer Vision"],
-      featured: true,
-      type: "AI/ML"
-    },
-    {
-      title: "Sentiment Analysis and Bias Detection",
-      year: "2024",
-      description: "Developed ML/DL models for detecting sentiment and geopolitical bias in social media text. Supported academic research published in ICCIT 2024.",
-      technologies: ["Machine Learning", "Deep Learning", "NLP", "Python", "Social Media Analysis"],
-      featured: true,
-      type: "Research"
-    },
-    {
-      title: "Time-Series Forecasting for Health Data",
-      year: "2024",
-      description: "Built forecasting models to predict Monkeypox outbreak trends. Implemented LSTM, GRU, and ensemble ML models to improve predictive accuracy.",
-      technologies: ["LSTM", "GRU", "Time Series", "Python", "Healthcare Analytics", "Ensemble Methods"],
-      featured: true,
-      type: "AI/ML"
-    },
-    {
-      title: "Attendance Management App",
-      year: "2024",
-      description: "Cross-platform mobile app built with Flutter and Dart. Integrated Firebase for authentication and real-time database. Applied Riverpod for state management.",
-      technologies: ["Flutter", "Dart", "Firebase", "Riverpod", "Mobile Development"],
-      type: "Mobile"
-    },
-    {
-      title: "Full-Stack Web Development Projects",
-      year: "2023 – Ongoing",
-      description: "Designed responsive frontends with React, TailwindCSS, and DaisyUI. Built backends with Node.js, Express.js, MySQL, and PHP (Laravel).",
-      technologies: ["React", "TailwindCSS", "Node.js", "Express.js", "MySQL", "PHP", "Laravel"],
-      type: "Web Development"
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setProjects(data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   const getTypeColor = (type: string) => {
     switch (type) {
@@ -54,6 +84,57 @@ const Projects = () => {
       default: return "bg-muted";
     }
   };
+
+  const handleProjectClick = async (project: Project, action: string) => {
+    // Track analytics
+    await supabase.from('analytics').insert([
+      {
+        event_type: 'project_interaction',
+        metadata: { 
+          project_id: project.id, 
+          project_title: project.title,
+          action: action 
+        }
+      }
+    ]);
+
+    if (action === 'github' && project.github_url) {
+      window.open(project.github_url, '_blank');
+    } else if (action === 'demo' && project.demo_url) {
+      window.open(project.demo_url, '_blank');
+    }
+  };
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">Featured Projects</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Innovative solutions spanning AI research, web development, and mobile applications
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-8">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Card key={index} className="animate-pulse bg-card/50">
+                <CardHeader>
+                  <div className="h-6 bg-muted rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-muted rounded w-1/2"></div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-muted rounded"></div>
+                    <div className="h-4 bg-muted rounded w-5/6"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="py-20">
@@ -68,7 +149,7 @@ const Projects = () => {
         <div className="grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <Card 
-              key={index} 
+              key={project.id} 
               className={`hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up ${project.featured ? 'border-primary shadow-glow' : ''}`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
@@ -77,10 +158,10 @@ const Projects = () => {
                   <div>
                     <CardTitle className="text-xl mb-2">{project.title}</CardTitle>
                     <div className="flex items-center space-x-4">
-                      <Badge 
-                        className={`${getTypeColor(project.type)} text-white`}
+                     <Badge 
+                        className={`${getTypeColor(project.project_type)} text-white`}
                       >
-                        {project.type}
+                        {project.project_type}
                       </Badge>
                       <div className="flex items-center text-sm text-muted-foreground">
                         <Calendar className="h-4 w-4 mr-1" />
@@ -101,29 +182,50 @@ const Projects = () => {
                   {project.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((tech, techIndex) => (
-                    <Badge 
-                      key={techIndex} 
-                      variant="secondary" 
-                      className="hover-lift animate-scale-in"
-                      style={{ animationDelay: `${(index * 3 + techIndex) * 0.05}s` }}
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
+                 <div className="flex flex-wrap gap-2 mb-6">
+                   {project.technologies.map((tech, techIndex) => (
+                     <Badge 
+                       key={techIndex} 
+                       variant="secondary" 
+                       className="hover-lift animate-scale-in flex items-center"
+                       style={{ animationDelay: `${(index * 3 + techIndex) * 0.05}s` }}
+                     >
+                       <TechLogo name={tech} />
+                       {tech}
+                     </Badge>
+                   ))}
+                 </div>
 
-                <div className="flex space-x-3">
-                  <Button variant="outline" size="sm" className="glow-border hover-lift">
-                    <Github className="h-4 w-4 mr-2" />
-                    Code
-                  </Button>
-                  <Button variant="outline" size="sm" className="glow-border hover-lift">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Demo
-                  </Button>
-                </div>
+                 <div className="flex space-x-3">
+                   {project.github_url && project.github_url !== '#' && (
+                     <Button 
+                       variant="outline" 
+                       size="sm" 
+                       className="glow-border hover-lift"
+                       onClick={() => handleProjectClick(project, 'github')}
+                     >
+                       <Github className="h-4 w-4 mr-2" />
+                       Code
+                     </Button>
+                   )}
+                   {project.demo_url && project.demo_url !== '#' && (
+                     <Button 
+                       variant="outline" 
+                       size="sm" 
+                       className="glow-border hover-lift"
+                       onClick={() => handleProjectClick(project, 'demo')}
+                     >
+                       <ExternalLink className="h-4 w-4 mr-2" />
+                       Demo
+                     </Button>
+                   )}
+                   {(!project.github_url || project.github_url === '#') && (!project.demo_url || project.demo_url === '#') && (
+                     <Badge variant="secondary" className="flex items-center">
+                       <Code className="h-4 w-4 mr-2" />
+                       Coming Soon
+                     </Badge>
+                   )}
+                 </div>
               </CardContent>
             </Card>
           ))}

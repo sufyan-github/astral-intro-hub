@@ -5,7 +5,10 @@ import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Research from "@/components/Research";
+import Blog from "@/components/Blog";
+import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
+import Analytics from "@/components/Analytics";
 
 const Index = () => {
   return (
@@ -20,6 +23,8 @@ const Index = () => {
         <Skills />
         <Projects />
         <Research />
+        <Blog />
+        <Testimonials />
         <Contact />
       </main>
       
@@ -31,6 +36,9 @@ const Index = () => {
           </p>
         </div>
       </footer>
+      
+      {/* Analytics Component */}
+      <Analytics />
     </div>
   );
 };

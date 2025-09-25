@@ -3,6 +3,44 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Code, Database, Brain, Wrench } from "lucide-react";
 
+// Tech logo component for individual skills
+const TechLogo = ({ name }: { name: string }) => {
+  const getTechIcon = (techName: string) => {
+    const name = techName.toLowerCase();
+    if (name.includes('python')) return '🐍';
+    if (name.includes('javascript')) return '⚡';
+    if (name.includes('react')) return '⚛️';
+    if (name.includes('node')) return '💚';
+    if (name.includes('html') || name.includes('css')) return '🌐';
+    if (name.includes('tailwind')) return '🎨';
+    if (name.includes('machine learning') || name.includes('ml')) return '🤖';
+    if (name.includes('deep learning') || name.includes('dl')) return '🧠';
+    if (name.includes('computer vision')) return '👁️';
+    if (name.includes('nlp')) return '💬';
+    if (name.includes('tensorflow') || name.includes('pytorch')) return '📊';
+    if (name.includes('data science')) return '📈';
+    if (name.includes('mysql')) return '🗃️';
+    if (name.includes('mongodb')) return '🍃';
+    if (name.includes('express')) return '🚀';
+    if (name.includes('php') || name.includes('laravel')) return '🐘';
+    if (name.includes('firebase')) return '🔥';
+    if (name.includes('rest api')) return '🌍';
+    if (name.includes('git') || name.includes('github')) return '📚';
+    if (name.includes('vs code')) return '📝';
+    if (name.includes('docker')) return '🐳';
+    if (name.includes('postman')) return '📮';
+    if (name.includes('figma')) return '🎯';
+    if (name.includes('linux')) return '🐧';
+    return '💻';
+  };
+
+  return (
+    <span className="text-lg mr-2 animate-pulse">
+      {getTechIcon(name)}
+    </span>
+  );
+};
+
 const Skills = () => {
   const skillCategories = [
     {
@@ -92,11 +130,14 @@ const Skills = () => {
               <CardContent>
                 <div className="space-y-4">
                   {category.skills.map((skill, skillIndex) => (
-                    <div key={skillIndex} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">{skill.name}</span>
-                        <span className="text-sm text-muted-foreground">{skill.level}%</span>
-                      </div>
+                     <div key={skillIndex} className="space-y-2">
+                       <div className="flex justify-between items-center">
+                         <div className="flex items-center">
+                           <TechLogo name={skill.name} />
+                           <span className="font-medium">{skill.name}</span>
+                         </div>
+                         <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                       </div>
                       <Progress 
                         value={skill.level} 
                         className="h-2"
