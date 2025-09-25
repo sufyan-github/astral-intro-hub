@@ -151,14 +151,15 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Certifications */}
+        {/* Quick Certifications Overview */}
         <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Certifications</CardTitle>
+            <CardTitle className="text-2xl text-center">Quick Certifications Overview</CardTitle>
+            <p className="text-center text-muted-foreground">View detailed certificates in the Certifications section</p>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-4">
-              {certifications.map((cert, index) => (
+              {certifications.slice(0, 4).map((cert, index) => (
                 <Badge 
                   key={index} 
                   variant="secondary" 

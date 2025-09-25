@@ -11,6 +11,9 @@ import Contact from "@/components/Contact";
 import Analytics from "@/components/Analytics";
 import ParticleBackground from "@/components/ParticleBackground";
 import FloatingTechElements from "@/components/FloatingTechElements";
+import GitHubHeatmap from "@/components/GitHubHeatmap";
+import Certifications from "@/components/Certifications";
+import Achievements from "@/components/Achievements";
 import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
@@ -32,6 +35,9 @@ const Index = () => {
           <About />
           <Experience />
           <Skills />
+          <GitHubHeatmap />
+          <Certifications />
+          <Achievements />
           <Projects />
           <Research />
           <Blog />
