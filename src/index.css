@@ -126,24 +126,30 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* 3D Animation Keyframes */
+  /* Enhanced 3D Animation Keyframes */
   @keyframes float {
-    0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
-    25% { transform: translateY(-20px) rotateX(15deg) rotateY(90deg); }
-    50% { transform: translateY(-10px) rotateX(0deg) rotateY(180deg); }
-    75% { transform: translateY(-30px) rotateX(-15deg) rotateY(270deg); }
+    0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    25% { transform: translateY(-20px) rotateX(15deg) rotateY(90deg) rotateZ(5deg); }
+    50% { transform: translateY(-10px) rotateX(0deg) rotateY(180deg) rotateZ(10deg); }
+    75% { transform: translateY(-30px) rotateX(-15deg) rotateY(270deg) rotateZ(-5deg); }
   }
 
   @keyframes float-reverse {
-    0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
-    25% { transform: translateY(20px) rotateX(-15deg) rotateY(-90deg); }
-    50% { transform: translateY(10px) rotateX(0deg) rotateY(-180deg); }
-    75% { transform: translateY(30px) rotateX(15deg) rotateY(-270deg); }
+    0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    25% { transform: translateY(20px) rotateX(-15deg) rotateY(-90deg) rotateZ(-5deg); }
+    50% { transform: translateY(10px) rotateX(0deg) rotateY(-180deg) rotateZ(-10deg); }
+    75% { transform: translateY(30px) rotateX(15deg) rotateY(-270deg) rotateZ(5deg); }
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px hsl(212 100% 65% / 0.3); }
-    50% { box-shadow: 0 0 40px hsl(212 100% 65% / 0.6), 0 0 60px hsl(189 100% 60% / 0.4); }
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(212 100% 65% / 0.3), 0 0 40px hsl(212 100% 65% / 0.1);
+      transform: scale(1);
+    }
+    50% { 
+      box-shadow: 0 0 40px hsl(212 100% 65% / 0.6), 0 0 80px hsl(189 100% 60% / 0.4);
+      transform: scale(1.05);
+    }
   }
 
   @keyframes gradient-flow {
@@ -158,8 +164,25 @@ All colors MUST be HSL.
   }
 
   @keyframes scale-in {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
+    from { opacity: 0; transform: scale(0.9) rotateZ(-5deg); }
+    to { opacity: 1; transform: scale(1) rotateZ(0deg); }
+  }
+
+  @keyframes particle-float {
+    0%, 100% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg); }
+    25% { transform: translate3d(-20px, -30px, 20px) rotateX(90deg) rotateY(45deg); }
+    50% { transform: translate3d(20px, -15px, -20px) rotateX(180deg) rotateY(90deg); }
+    75% { transform: translate3d(-10px, 20px, 30px) rotateX(270deg) rotateY(180deg); }
+  }
+
+  @keyframes orbit {
+    0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+  }
+
+  @keyframes neural-pulse {
+    0%, 100% { opacity: 0.3; stroke-width: 1px; }
+    50% { opacity: 0.8; stroke-width: 2px; }
   }
 
   /* 3D Background Elements */
@@ -238,10 +261,19 @@ All colors MUST be HSL.
     opacity: 0.2;
   }
 
-  /* Animations */
+  /* Enhanced Animations */
   .animate-float { animation: float 6s ease-in-out infinite; }
   .animate-float-reverse { animation: float-reverse 8s ease-in-out infinite; }
   .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
   .animate-slide-up { animation: slide-up 0.6s ease-out; }
   .animate-scale-in { animation: scale-in 0.4s ease-out; }
+  .animate-particle-float { animation: particle-float 12s ease-in-out infinite; }
+  .animate-orbit { animation: orbit 20s linear infinite; }
+  .animate-neural-pulse { animation: neural-pulse 3s ease-in-out infinite; }
+
+  /* Performance optimizations */
+  .animate-float, .animate-float-reverse, .animate-particle-float {
+    will-change: transform;
+    backface-visibility: hidden;
+  }
 }
