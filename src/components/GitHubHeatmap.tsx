@@ -49,7 +49,7 @@ const GitHubHeatmap = () => {
           <CardContent className="p-6">
             <div className="flex justify-center">
               <GitHubCalendar 
-                username="mdabusufyan22" 
+                username="sufyan-github" 
                 colorScheme="dark"
                 theme={{
                   light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
@@ -61,7 +61,7 @@ const GitHubHeatmap = () => {
             <div className="flex justify-center mt-6">
               <Badge variant="secondary" className="bg-gradient-primary text-primary-foreground">
                 <a 
-                  href="https://github.com/mdabusufyan22" 
+                  href="https://github.com/sufyan-github" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center"
