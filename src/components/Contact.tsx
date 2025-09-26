@@ -7,10 +7,31 @@ import { Mail, Phone, MapPin, Linkedin, Github, Send } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { z } from 'zod';
 
 // Import JSON data
 import contactInfoData from '@/data/contactInfo.json';
 import availabilityData from '@/data/availability.json';
+
+// Validation schema
+const contactSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, 'Name is required')
+    .max(100, 'Name must be less than 100 characters'),
+  email: z.string()
+    .trim()
+    .email('Please enter a valid email address')
+    .max(255, 'Email must be less than 255 characters'),
+  subject: z.string()
+    .trim()
+    .min(1, 'Subject is required')
+    .max(200, 'Subject must be less than 200 characters'),
+  message: z.string()
+    .trim()
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message must be less than 2000 characters'),
+});
 
 // Map icon names from JSON to Lucide icons
 const iconsMap: Record<string, any> = {
@@ -45,10 +66,32 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      // Insert into Supabase "contacts" table
-      const { error } = await supabase.from('contacts').insert([formData]);
+      // Validate form data
+      const validatedData = contactSchema.parse(formData);
+
+      // Insert into Supabase "contacts" table with validated data
+      const { error } = await supabase.from('contacts').insert([{
+        name: validatedData.name,
+        email: validatedData.email,
+        subject: validatedData.subject,
+        message: validatedData.message,
+      }]);
 
       if (error) throw error;
+
+      // Call edge function to send emails
+      const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: validatedData.name,
+          email: validatedData.email,
+          subject: validatedData.subject,
+          message: validatedData.message,
+        },
+      });
+
+      if (emailError) {
+        console.error('Email sending error:', emailError);
+      }
 
       toast({
         title: 'Message sent successfully!',
@@ -63,12 +106,20 @@ const Contact = () => {
         message: '',
       });
     } catch (error) {
-      console.error('Contact form error:', error);
-      toast({
-        title: 'Error sending message',
-        description: 'Something went wrong. Please try again.',
-        variant: 'destructive',
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: 'Validation Error',
+          description: error.errors[0].message,
+          variant: 'destructive',
+        });
+      } else {
+        console.error('Contact form error:', error);
+        toast({
+          title: 'Error sending message',
+          description: 'Something went wrong. Please try again.',
+          variant: 'destructive',
+        });
+      }
     } finally {
       setLoading(false);
     }

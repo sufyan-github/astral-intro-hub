@@ -13,6 +13,58 @@ interface ContactEmailRequest {
   message: string;
 }
 
+// Input validation function
+const validateContactInput = (data: any): ContactEmailRequest => {
+  if (!data || typeof data !== 'object') {
+    throw new Error('Invalid request body');
+  }
+
+  const { name, email, subject, message } = data;
+
+  // Validate name
+  if (!name || typeof name !== 'string' || name.trim().length === 0) {
+    throw new Error('Name is required');
+  }
+  if (name.trim().length > 100) {
+    throw new Error('Name must be less than 100 characters');
+  }
+
+  // Validate email
+  if (!email || typeof email !== 'string') {
+    throw new Error('Email is required');
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.trim())) {
+    throw new Error('Invalid email format');
+  }
+  if (email.trim().length > 255) {
+    throw new Error('Email must be less than 255 characters');
+  }
+
+  // Validate subject
+  if (!subject || typeof subject !== 'string' || subject.trim().length === 0) {
+    throw new Error('Subject is required');
+  }
+  if (subject.trim().length > 200) {
+    throw new Error('Subject must be less than 200 characters');
+  }
+
+  // Validate message
+  if (!message || typeof message !== 'string' || message.trim().length < 10) {
+    throw new Error('Message must be at least 10 characters');
+  }
+  if (message.trim().length > 2000) {
+    throw new Error('Message must be less than 2000 characters');
+  }
+
+  return {
+    name: name.trim(),
+    email: email.trim().toLowerCase(),
+    subject: subject.trim(),
+    message: message.trim(),
+  };
+};
+
 // Simple email sending using Resend API via fetch
 const sendEmail = async (to: string[], subject: string, html: string, from: string) => {
   const response = await fetch('https://api.resend.com/emails', {
@@ -44,7 +96,10 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, subject, message }: ContactEmailRequest = await req.json();
+    const rawData = await req.json();
+    
+    // Validate and sanitize input
+    const { name, email, subject, message } = validateContactInput(rawData);
 
     // Initialize Supabase client
     const supabase = createClient(

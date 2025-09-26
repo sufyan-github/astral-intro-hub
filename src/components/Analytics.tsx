@@ -56,21 +56,21 @@ const Analytics = () => {
 
     // Track time on page with sendBeacon
     const startTime = Date.now();
-    const trackTimeOnPage = () => {
+    const trackTimeOnPage = async () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000);
       if (timeSpent > 30) {
-        const payload = {
-          session_id: sessionId,
-          event_type: "time_on_page",
-          page_path: window.location.pathname,
-          metadata: { seconds: timeSpent },
-        };
-
-        // Safer for unload events
-        navigator.sendBeacon(
-          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/analytics`,
-          JSON.stringify(payload)
-        );
+        try {
+          await supabase.from("analytics").insert([
+            {
+              session_id: sessionId,
+              event_type: "time_on_page",
+              page_path: window.location.pathname,
+              metadata: { seconds: timeSpent },
+            },
+          ]);
+        } catch (error) {
+          console.error("Time tracking error:", error);
+        }
       }
     };
 
