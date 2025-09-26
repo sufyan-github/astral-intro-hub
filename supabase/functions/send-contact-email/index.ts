@@ -89,10 +89,50 @@ const sendEmail = async (to: string[], subject: string, html: string, from: stri
   return await response.json();
 };
 
+// Rate limiting storage (in production, use Redis or similar)
+const rateLimits = new Map<string, { count: number; resetTime: number }>();
+
+const isRateLimited = (clientIP: string): boolean => {
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000; // 15 minutes
+  const maxRequests = 5; // Max 5 requests per 15 minutes
+  
+  const existing = rateLimits.get(clientIP);
+  
+  if (!existing || now > existing.resetTime) {
+    rateLimits.set(clientIP, { count: 1, resetTime: now + windowMs });
+    return false;
+  }
+  
+  if (existing.count >= maxRequests) {
+    return true;
+  }
+  
+  existing.count++;
+  return false;
+};
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIP = req.headers.get('x-forwarded-for') || 'unknown';
+  if (isRateLimited(clientIP)) {
+    return new Response(
+      JSON.stringify({ 
+        error: "Rate limit exceeded. Please try again later." 
+      }),
+      {
+        status: 429,
+        headers: { 
+          "Content-Type": "application/json", 
+          ...corsHeaders 
+        },
+      }
+    );
   }
 
   try {
