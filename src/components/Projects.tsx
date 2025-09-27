@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink, Calendar, Code } from "lucide-react";
+import demoTrafficImage from "@/assets/demo-traffic.jpg";
+import demoHealthTrackerImage from "@/assets/demo-healthtracker.png";
 
 // ================================================
 // JSON-DRIVEN PROJECTS
@@ -71,7 +73,15 @@ const getTypeColor = (type: string) => {
 
 const Projects: React.FC = () => {
   // If you need sorting/filtering, do it here with useMemo
-  const projects = useMemo(() => (projectsData as Project[]) ?? [], []);
+  const projects = useMemo(() => {
+    const projectsList = projectsData as Project[];
+    return projectsList.map(project => ({
+      ...project,
+      image_url: project.id === "p01" ? demoTrafficImage : 
+                 project.id === "p02" ? demoHealthTrackerImage : 
+                 project.image_url || "/projects/placeholder.jpg"
+    }));
+  }, []);
 
   return (
     <section id="projects" className="py-20">
@@ -93,6 +103,20 @@ const Projects: React.FC = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardHeader>
+                {/* Project Image */}
+                {project.image_url && (
+                  <div className="w-full h-48 overflow-hidden rounded-lg mb-4">
+                    <img 
+                      src={project.image_url} 
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = "/projects/placeholder.jpg";
+                      }}
+                    />
+                  </div>
+                )}
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <CardTitle className="text-xl mb-2">{project.title}</CardTitle>

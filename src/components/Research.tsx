@@ -128,14 +128,19 @@ const Research: React.FC = () => {
                 )}
 
                 <div className="flex flex-wrap gap-3">
-                  {paper.paperUrl && (
+                  {paper.paperUrl && paper.paperUrl !== "" && (
                     <Button asChild variant="outline" size="sm" className="glow-border hover-lift">
                       <a href={paper.paperUrl} target="_blank" rel="noreferrer">
-                        <FileText className="h-4 w-4 mr-2" /> Read Paper
+                        <FileText className="h-4 w-4 mr-2" /> Download Paper
                       </a>
                     </Button>
                   )}
-                  {paper.conferenceUrl && (
+                  <Button asChild variant="outline" size="sm" className="glow-border hover-lift">
+                    <a href="#" onClick={(e) => { e.preventDefault(); /* Add reading functionality */ }}>
+                      <FileText className="h-4 w-4 mr-2" /> Read Online
+                    </a>
+                  </Button>
+                  {paper.conferenceUrl && paper.conferenceUrl !== "" && (
                     <Button asChild variant="outline" size="sm" className="glow-border hover-lift">
                       <a href={paper.conferenceUrl} target="_blank" rel="noreferrer">
                         <ExternalLink className="h-4 w-4 mr-2" /> Conference

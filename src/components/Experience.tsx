@@ -51,44 +51,56 @@ const Experience: React.FC = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardContent className="p-8">
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
+                <div className="flex items-start gap-6 mb-6">
+                  {/* Company Logo */}
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                      {exp.company.split(' ').map(word => word[0]).join('').slice(0, 2).toUpperCase()}
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-bold text-primary mb-2 break-words">{exp.title}</h3>
-                    <div className="flex items-center text-lg font-semibold mb-2 break-words">
-                      <Building className="h-5 w-5 mr-2 text-accent" />
-                      {exp.company}
-                    </div>
-                    {exp.website && (
-                      <p className="text-sm text-accent mb-2 truncate">
-                        <a href={toUrl(exp.website)} target="_blank" rel="noreferrer" className="hover:underline">
-                          {exp.website}
-                        </a>
-                      </p>
-                    )}
-                    {exp.supervisor && (
-                      <p className="text-sm text-muted-foreground mb-2">Supervised by: {exp.supervisor}</p>
-                    )}
-                  </div>
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-2xl font-bold gradient-text mb-2 break-words">{exp.title}</h3>
+                        <div className="flex items-center text-lg font-semibold text-primary mb-2 break-words">
+                          <Building className="h-5 w-5 mr-2" />
+                          {exp.company}
+                        </div>
+                        {exp.website && (
+                          <p className="text-sm text-accent mb-2 truncate">
+                            <a href={toUrl(exp.website)} target="_blank" rel="noreferrer" className="hover:underline">
+                              {exp.website}
+                            </a>
+                          </p>
+                        )}
+                        {exp.supervisor && (
+                          <p className="text-sm text-muted-foreground mb-2">Supervised by: {exp.supervisor}</p>
+                        )}
+                      </div>
 
-                  <div className="lg:text-right mt-4 lg:mt-0 flex-shrink-0">
-                    <Badge variant="secondary" className="mb-2">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {exp.period}
-                    </Badge>
-                    <div className="flex items-center text-sm text-muted-foreground lg:justify-end">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      <span className="break-words">{exp.location}</span>
+                      <div className="lg:text-right mt-4 lg:mt-0 flex-shrink-0">
+                        <Badge variant="secondary" className="mb-2 bg-primary/10 text-primary border-primary/20">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          {exp.period}
+                        </Badge>
+                        <div className="flex items-center text-sm text-muted-foreground lg:justify-end">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          <span className="break-words">{exp.location}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {exp.description.map((desc, i) => (
+                        <div key={i} className="flex items-start">
+                          <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
+                          <p className="text-muted-foreground">{desc}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-
-                <div className="space-y-2">
-                  {exp.description.map((desc, i) => (
-                    <div key={i} className="flex items-start">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
-                      <p className="text-muted-foreground">{desc}</p>
-                    </div>
-                  ))}
                 </div>
               </CardContent>
             </Card>

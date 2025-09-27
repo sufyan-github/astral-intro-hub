@@ -261,6 +261,20 @@ All colors MUST be HSL.
     opacity: 0.2;
   }
 
+  /* Custom scrollbar */
+
+  /* 3D Carousel Styles */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   /* Enhanced Animations */
   .animate-float { animation: float 6s ease-in-out infinite; }
   .animate-float-reverse { animation: float-reverse 8s ease-in-out infinite; }
