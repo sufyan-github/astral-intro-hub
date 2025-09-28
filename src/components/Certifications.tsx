@@ -51,7 +51,7 @@ const Certifications: React.FC = () => {
     }
 
     autoPlayRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % certifications.length);
+      setCurrentIndex((prev) => (prev + 3) % certifications.length);
     }, 15000); // 15 seconds
 
     return () => {
@@ -62,19 +62,19 @@ const Certifications: React.FC = () => {
   }, [isHovered, certifications.length]);
 
   const nextCert = () => {
-    setCurrentIndex((prev) => (prev + 1) % certifications.length);
+    setCurrentIndex((prev) => (prev + 3) % certifications.length);
   };
 
   const prevCert = () => {
-    setCurrentIndex((prev) => (prev - 1 + certifications.length) % certifications.length);
+    setCurrentIndex((prev) => (prev - 3 + certifications.length) % certifications.length);
   };
 
   const getVisibleCerts = () => {
     const visible = [];
     const totalCerts = certifications.length;
     
-    for (let i = -2; i <= 2; i++) {
-      const index = (currentIndex + i + totalCerts) % totalCerts;
+    for (let i = 0; i < 3; i++) {
+      const index = (currentIndex + i) % totalCerts;
       visible.push({
         cert: certifications[index],
         position: i,
@@ -103,59 +103,45 @@ const Certifications: React.FC = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative w-full h-full flex items-center justify-center gap-8">
             {getVisibleCerts().map(({ cert, position, index }) => {
-              const isCenter = position === 0;
-              const scale = isCenter ? 1 : 0.7 - Math.abs(position) * 0.1;
-              const translateX = position * 220;
-              const translateZ = isCenter ? 0 : -Math.abs(position) * 100;
-              const rotateY = position * -15;
-              const opacity = Math.max(0.3, 1 - Math.abs(position) * 0.2);
+              const scale = 1;
+              const translateX = (position - 1) * 320;
+              const rotateY = (position - 1) * 5;
+              const opacity = 1;
 
               return (
                 <div
                   key={`${cert.id}-${index}`}
-                  className={`absolute transition-all duration-700 ease-out cursor-pointer ${
-                    isCenter ? 'z-30' : 'z-10'
-                  }`}
+                  className="transition-all duration-700 ease-out cursor-pointer z-20"
                   style={{
-                    transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+                    transform: `translateX(${translateX}px) rotateY(${rotateY}deg) scale(${scale})`,
                     opacity,
                   }}
-                  onClick={() => {
-                    if (isCenter) {
-                      setSelectedCert(cert);
-                    } else if (position > 0) {
-                      nextCert();
-                    } else {
-                      prevCert();
-                    }
-                  }}
+                  onClick={() => setSelectedCert(cert)}
                 >
-                  <Card className={`w-80 h-96 hover-lift glow-border bg-card/50 backdrop-blur-sm transition-all duration-300 ${
-                    isCenter ? 'shadow-2xl shadow-primary/20' : ''
-                  }`}>
+                  <Card className="w-96 h-[450px] hover-lift glow-border bg-card/50 backdrop-blur-sm transition-all duration-300 shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/20">
                     <CardHeader className="text-center pb-3">
                       <div className="flex justify-center mb-2">
-                        <Award className="h-6 w-6 text-primary" />
+                        <Award className="h-7 w-7 text-primary" />
                       </div>
-                      <CardTitle className="text-lg leading-tight line-clamp-2">
+                      <CardTitle className="text-xl leading-tight line-clamp-2 gradient-text font-display">
                         {cert.title}
                       </CardTitle>
-                      <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground">
+                      <div className="flex flex-col items-center gap-2 text-sm text-muted-foreground">
                         <span className="inline-flex items-center">
-                          <Building className="h-3 w-3 mr-1" />
+                          <Building className="h-4 w-4 mr-2" />
                           {cert.issuer}
                         </span>
                         <span className="inline-flex items-center">
-                          <Calendar className="h-3 w-3 mr-1" />
+                          <Calendar className="h-4 w-4 mr-2" />
                           {cert.date}
                         </span>
                       </div>
                     </CardHeader>
 
-                    <CardContent className="px-4">
-                      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border mx-auto mb-3">
+                    <CardContent className="px-6">
+                      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border mx-auto mb-4 hover:scale-105 transition-transform duration-300">
                         <img
                           src={cert.images.center}
                           alt={`${cert.title} certificate`}
@@ -168,7 +154,7 @@ const Certifications: React.FC = () => {
                       </div>
 
                       {Array.isArray(cert.skills) && cert.skills.length > 0 && (
-                        <div className="flex flex-wrap justify-center gap-1">
+                        <div className="flex flex-wrap justify-center gap-2">
                           {cert.skills.slice(0, 3).map((skill, i) => (
                             <Badge
                               key={`${cert.id}-${skill}-${i}`}
@@ -209,12 +195,12 @@ const Certifications: React.FC = () => {
 
         {/* Dots indicator */}
         <div className="flex justify-center mt-8 space-x-2">
-          {certifications.map((_, index) => (
+          {Array.from({ length: Math.ceil(certifications.length / 3) }).map((_, groupIndex) => (
             <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
+              key={groupIndex}
+              onClick={() => setCurrentIndex(groupIndex * 3)}
               className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentIndex ? 'bg-primary' : 'bg-primary/30 hover:bg-primary/50'
+                Math.floor(currentIndex / 3) === groupIndex ? 'bg-primary' : 'bg-primary/30 hover:bg-primary/50'
               }`}
             />
           ))}
@@ -223,7 +209,7 @@ const Certifications: React.FC = () => {
         {/* Certificate count */}
         <div className="text-center mt-6">
           <p className="text-muted-foreground">
-            {currentIndex + 1} of {certifications.length} certificates
+            Showing {Math.min(3, certifications.length - currentIndex)} of {certifications.length} certificates
           </p>
         </div>
 

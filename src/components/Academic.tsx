@@ -48,7 +48,7 @@ const Academic: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="relative">
             {/* Vertical line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary via-primary to-transparent"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary via-primary to-transparent hidden md:block"></div>
             
             {academicData.map((item, index) => {
               const Icon = item.icon;
@@ -57,15 +57,22 @@ const Academic: React.FC = () => {
               return (
                 <div key={item.id} className="relative mb-16 last:mb-0">
                   {/* Timeline node */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-8">
+                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-8 hidden md:block">
                     <div className="w-16 h-16 rounded-full border-4 border-primary bg-background flex items-center justify-center shadow-lg animate-pulse">
                       <Icon className="h-8 w-8 text-primary" />
                     </div>
                   </div>
+                  
+                  {/* Mobile Timeline node */}
+                  <div className="md:hidden absolute left-4 top-8 transform -translate-y-1/2">
+                    <div className="w-12 h-12 rounded-full border-3 border-primary bg-background flex items-center justify-center shadow-lg animate-pulse">
+                      <Icon className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
 
-                  {/* Content card */}
-                  <div className={`flex ${isLeft ? 'justify-start pr-8' : 'justify-end pl-8'}`}>
-                    <div className={`w-full max-w-lg ${isLeft ? 'mr-8' : 'ml-8'}`}>
+                   {/* Content card */}
+                  <div className={`flex ${isLeft ? 'justify-start md:pr-8 pr-4' : 'justify-end md:pl-8 pl-4'}`}>
+                    <div className={`w-full max-w-lg ${isLeft ? 'md:mr-8 mr-4' : 'md:ml-8 ml-4'}`}>
                       <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up" style={{ animationDelay: `${index * 0.2}s` }}>
                         <CardContent className="p-6">
                           {/* Period badge */}

@@ -51,10 +51,10 @@ const Experience: React.FC = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardContent className="p-8">
-                <div className="flex items-start gap-6 mb-6">
+                <div className="flex items-stretch gap-6 mb-6 min-h-[120px]">
                   {/* Company Logo */}
                   <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <div className="w-20 h-full min-h-[120px] rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold text-lg shadow-lg">
                       {exp.company.split(' ').map(word => word[0]).join('').slice(0, 2).toUpperCase()}
                     </div>
                   </div>

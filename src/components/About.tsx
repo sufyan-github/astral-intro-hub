@@ -91,8 +91,8 @@ const About = () => {
                 
                 const zIndex = randomFacts.length - Math.abs(offset);
                 const scale = isActive ? 1 : 0.95 - Math.abs(offset) * 0.05;
-                const translateY = offset * 8;
-                const rotate = offset * 2;
+                const translateY = offset * 12;
+                const rotate = offset * 8;
                 
                 return (
                   <Card 
@@ -171,81 +171,6 @@ const About = () => {
               </p>
             </div>
 
-            {/* Contact Information */}
-            <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <h4 className="text-xl font-bold mb-4 gradient-text">Contact Information</h4>
-                <div className="space-y-3">
-                  <div className="flex items-center text-muted-foreground">
-                    <MapPin className="h-5 w-5 mr-3 text-primary flex-shrink-0" />
-                    <span className="text-sm">{personal.address}</span>
-                  </div>
-                  <div className="flex items-center text-muted-foreground">
-                    <Phone className="h-5 w-5 mr-3 text-primary flex-shrink-0" />
-                    <span className="text-sm">{personal.phone}</span>
-                  </div>
-                  <div className="flex items-center text-muted-foreground">
-                    <Mail className="h-5 w-5 mr-3 text-primary flex-shrink-0" />
-                    <span className="text-sm">{personal.email}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Research Interests */}
-            <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <h4 className="text-xl font-bold mb-4 gradient-text">Research Interests</h4>
-                <div className="flex flex-wrap gap-2">
-                  {interests.map((interest: string, index: number) => (
-                    <Badge
-                      key={interest}
-                      className="bg-primary/10 text-primary border-primary/20 hover-lift animate-scale-in"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      {interest}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Languages & Skills */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h4 className="text-lg font-bold mb-4 gradient-text">Languages</h4>
-                  <div className="space-y-3">
-                    {languages.map((lang: any, index: number) => (
-                      <div key={lang.name} className="flex justify-between items-center">
-                        <span className="font-medium">{lang.name}</span>
-                        <Badge variant="secondary" className="text-xs">
-                          {lang.level}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h4 className="text-lg font-bold mb-4 gradient-text">Soft Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {softSkills.map((skill: string, index: number) => (
-                      <Badge
-                        key={skill}
-                        variant="outline"
-                        className="text-xs hover-lift animate-scale-in"
-                        style={{ animationDelay: `${index * 0.1}s` }}
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </div>
