@@ -51,8 +51,8 @@ const Certifications: React.FC = () => {
     }
 
     autoPlayRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 3) % certifications.length);
-    }, 15000); // 15 seconds
+      setCurrentIndex((prev) => (prev + 1) % certifications.length);
+    }, 3000); // 3 seconds
 
     return () => {
       if (autoPlayRef.current) {
@@ -62,19 +62,20 @@ const Certifications: React.FC = () => {
   }, [isHovered, certifications.length]);
 
   const nextCert = () => {
-    setCurrentIndex((prev) => (prev + 3) % certifications.length);
+    setCurrentIndex((prev) => (prev + 1) % certifications.length);
   };
 
   const prevCert = () => {
-    setCurrentIndex((prev) => (prev - 3 + certifications.length) % certifications.length);
+    setCurrentIndex((prev) => (prev - 1 + certifications.length) % certifications.length);
   };
 
   const getVisibleCerts = () => {
     const visible = [];
     const totalCerts = certifications.length;
     
-    for (let i = 0; i < 3; i++) {
-      const index = (currentIndex + i) % totalCerts;
+    // Show 5 certificates: 2 left + 1 center + 2 right
+    for (let i = -2; i <= 2; i++) {
+      const index = (currentIndex + i + totalCerts) % totalCerts;
       visible.push({
         cert: certifications[index],
         position: i,
@@ -97,51 +98,72 @@ const Certifications: React.FC = () => {
           </p>
         </div>
 
-        {/* 3D Carousel */}
+        {/* 3D Curved Carousel */}
         <div 
-          className="relative h-[500px] flex items-center justify-center perspective-1000"
+          className="relative h-[450px] flex items-center justify-center perspective-1000 overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="relative w-full h-full flex items-center justify-center gap-8">
+          <div className="relative w-full h-full flex items-center justify-center">
             {getVisibleCerts().map(({ cert, position, index }) => {
-              const scale = 1;
-              const translateX = (position - 1) * 320;
-              const rotateY = (position - 1) * 5;
-              const opacity = 1;
+              const isCenter = position === 0;
+              const isVisible = Math.abs(position) <= 2;
+              
+              if (!isVisible) return null;
 
+              // 3D Curved positioning
+              const angle = position * 25; // Degrees
+              const radius = 280; // Distance from center
+              const translateX = Math.sin((angle * Math.PI) / 180) * radius;
+              const translateZ = Math.cos((angle * Math.PI) / 180) * radius - radius;
+              const rotateY = -angle;
+              const scale = isCenter ? 1 : 0.85 - Math.abs(position) * 0.1;
+              const opacity = isCenter ? 1 : 0.7 - Math.abs(position) * 0.15;
+              
               return (
                 <div
                   key={`${cert.id}-${index}`}
-                  className="transition-all duration-700 ease-out cursor-pointer z-20"
+                  className={`absolute transition-all duration-700 ease-out cursor-pointer ${
+                    isCenter ? 'z-30' : 'z-10'
+                  }`}
                   style={{
-                    transform: `translateX(${translateX}px) rotateY(${rotateY}deg) scale(${scale})`,
+                    transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                     opacity,
                   }}
-                  onClick={() => setSelectedCert(cert)}
+                  onClick={() => {
+                    if (isCenter) {
+                      setSelectedCert(cert);
+                    } else if (position > 0) {
+                      nextCert();
+                    } else {
+                      prevCert();
+                    }
+                  }}
                 >
-                  <Card className="w-96 h-[450px] hover-lift glow-border bg-card/50 backdrop-blur-sm transition-all duration-300 shadow-xl shadow-primary/10 hover:shadow-2xl hover:shadow-primary/20">
-                    <CardHeader className="text-center pb-3">
+                  <Card className={`w-80 h-[400px] hover-lift glow-border bg-card/50 backdrop-blur-sm transition-all duration-300 ${
+                    isCenter ? 'shadow-2xl shadow-primary/20' : 'shadow-lg shadow-black/10'
+                  }`}>
+                    <CardHeader className="text-center pb-2">
                       <div className="flex justify-center mb-2">
-                        <Award className="h-7 w-7 text-primary" />
+                        <Award className={`${isCenter ? 'h-6 w-6' : 'h-5 w-5'} text-primary`} />
                       </div>
-                      <CardTitle className="text-xl leading-tight line-clamp-2 gradient-text font-display">
+                      <CardTitle className={`${isCenter ? 'text-lg' : 'text-base'} leading-tight line-clamp-2 gradient-text font-display`}>
                         {cert.title}
                       </CardTitle>
-                      <div className="flex flex-col items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex flex-col items-center gap-1 text-xs text-muted-foreground">
                         <span className="inline-flex items-center">
-                          <Building className="h-4 w-4 mr-2" />
+                          <Building className="h-3 w-3 mr-1" />
                           {cert.issuer}
                         </span>
                         <span className="inline-flex items-center">
-                          <Calendar className="h-4 w-4 mr-2" />
+                          <Calendar className="h-3 w-3 mr-1" />
                           {cert.date}
                         </span>
                       </div>
                     </CardHeader>
 
-                    <CardContent className="px-6">
-                      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border mx-auto mb-4 hover:scale-105 transition-transform duration-300">
+                    <CardContent className="px-4">
+                      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border mx-auto mb-3">
                         <img
                           src={cert.images.center}
                           alt={`${cert.title} certificate`}
@@ -154,8 +176,8 @@ const Certifications: React.FC = () => {
                       </div>
 
                       {Array.isArray(cert.skills) && cert.skills.length > 0 && (
-                        <div className="flex flex-wrap justify-center gap-2">
-                          {cert.skills.slice(0, 3).map((skill, i) => (
+                        <div className="flex flex-wrap justify-center gap-1">
+                          {cert.skills.slice(0, isCenter ? 3 : 2).map((skill, i) => (
                             <Badge
                               key={`${cert.id}-${skill}-${i}`}
                               variant="secondary"
@@ -164,9 +186,9 @@ const Certifications: React.FC = () => {
                               {skill}
                             </Badge>
                           ))}
-                          {cert.skills.length > 3 && (
+                          {cert.skills.length > (isCenter ? 3 : 2) && (
                             <Badge variant="secondary" className="text-xs">
-                              +{cert.skills.length - 3} more
+                              +{cert.skills.length - (isCenter ? 3 : 2)} more
                             </Badge>
                           )}
                         </div>
@@ -194,22 +216,22 @@ const Certifications: React.FC = () => {
         </div>
 
         {/* Dots indicator */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {Array.from({ length: Math.ceil(certifications.length / 3) }).map((_, groupIndex) => (
+        <div className="flex justify-center mt-6 space-x-1">
+          {certifications.map((_, index) => (
             <button
-              key={groupIndex}
-              onClick={() => setCurrentIndex(groupIndex * 3)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                Math.floor(currentIndex / 3) === groupIndex ? 'bg-primary' : 'bg-primary/30 hover:bg-primary/50'
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 rounded-full transition-colors ${
+                index === currentIndex ? 'bg-primary' : 'bg-primary/30 hover:bg-primary/50'
               }`}
             />
           ))}
         </div>
 
         {/* Certificate count */}
-        <div className="text-center mt-6">
-          <p className="text-muted-foreground">
-            Showing {Math.min(3, certifications.length - currentIndex)} of {certifications.length} certificates
+        <div className="text-center mt-4">
+          <p className="text-sm text-muted-foreground">
+            {currentIndex + 1} of {certifications.length} certificates
           </p>
         </div>
 
