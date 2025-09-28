@@ -1,32 +1,26 @@
 {
-  "education": {
-    "degree": "Bachelor of Science in Computer Science & Engineering",
-    "institution": "Rajshahi University of Engineering & Technology (RUET)",
-    "cgpa": "3.68 / 4.00",
-    "years": "2021 - 2025"
-  },
   "personal": {
-    "address": "Bangabandhu Sheikh Mujibur Rahman Hall, RUET, Rajshahi, Bangladesh",
-    "phone": "+880 1580 352238",
-    "email": "abusufyan.cse20@gmail.com"
+    "name": "Md. Abu Sufyan",
+    "degree": "Computer Science & Engineering",
+    "university": "Rajshahi University of Engineering & Technology (RUET), Bangladesh"
   },
   "interests": [
     "Machine Learning",
     "Deep Learning",
-    "Computer Vision",
-    "Sentiment Analysis",
-    "Time-Series Forecasting",
-    "Predictive Modeling"
+    "Artificial Intelligence",
+    "Bioinformatics",
+    "Medical Imaging"
   ],
   "languages": [
-    { "name": "Bangla", "level": "Native fluency" },
-    { "name": "English", "level": "Full professional proficiency" }
+    { "name": "Bangla", "level": 90 },
+    { "name": "English", "level": 75 }
   ],
   "softSkills": [
-    "Team Leadership",
-    "Technical Communication",
-    "Public Speaking",
-    "Project Planning",
-    "Event Management"
+    "Leadership",
+    "Problem Solving",
+    "Communication",
+    "Strategic Planning",
+    "Innovation",
+    "Team Management"
   ]
 }

@@ -1,55 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Phone, Mail, Brain, Code, Cpu, Zap, Globe } from "lucide-react";
+import { Brain, Code, Cpu, Zap, Globe } from "lucide-react";
 import aboutData from "@/data/about.json";
 
-const About = () => {
-  const { personal, interests, languages, softSkills } = aboutData;
-  
+// Fact cards data
+const randomFacts = [
+  {
+    title: "Passionate about AI",
+    description: "Deeply interested in Machine Learning, Deep Learning, and their real-world applications",
+    color: "bg-gradient-to-br from-green-400 to-green-600",
+    icon: Brain
+  },
+  {
+    title: "Full Stack Developer", 
+    description: "Experienced in building end-to-end web applications using modern technologies",
+    color: "bg-gradient-to-br from-blue-400 to-blue-600",
+    icon: Code
+  },
+  {
+    title: "Research Enthusiast",
+    description: "Actively contributing to research in sentiment analysis and predictive modeling",
+    color: "bg-gradient-to-br from-purple-400 to-purple-600", 
+    icon: Cpu
+  },
+  {
+    title: "Tech Community Leader",
+    description: "Leading AI education initiatives and building technology communities",
+    color: "bg-gradient-to-br from-orange-400 to-orange-600",
+    icon: Zap
+  },
+  {
+    title: "Problem Solver",
+    description: "Love tackling complex challenges and finding innovative solutions",
+    color: "bg-gradient-to-br from-red-400 to-red-600",
+    icon: Globe
+  }
+];
+
+const About: React.FC = () => {
+  const { personal } = aboutData;
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
-  
-  // Random facts about the person
-  const randomFacts = [
-    {
-      title: "Passionate about AI",
-      description: "Deeply interested in Machine Learning, Deep Learning, and their real-world applications",
-      color: "bg-gradient-to-br from-green-400 to-green-600",
-      icon: Brain
-    },
-    {
-      title: "Full Stack Developer", 
-      description: "Experienced in building end-to-end web applications using modern technologies",
-      color: "bg-gradient-to-br from-blue-400 to-blue-600",
-      icon: Code
-    },
-    {
-      title: "Research Enthusiast",
-      description: "Actively contributing to research in sentiment analysis and predictive modeling",
-      color: "bg-gradient-to-br from-purple-400 to-purple-600", 
-      icon: Cpu
-    },
-    {
-      title: "Tech Community Leader",
-      description: "Leading AI education initiatives and building technology communities",
-      color: "bg-gradient-to-br from-orange-400 to-orange-600",
-      icon: Zap
-    },
-    {
-      title: "Problem Solver",
-      description: "Love tackling complex challenges and finding innovative solutions",
-      color: "bg-gradient-to-br from-red-400 to-red-600",
-      icon: Globe
+  const intervalRef = useRef<number | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
+
+  // Auto-swap facts every 3 seconds
+  useEffect(() => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
     }
-  ];
 
-  const nextFact = () => {
-    setCurrentFactIndex((prev) => (prev + 1) % randomFacts.length);
-  };
+    if (!isHovering) {
+      intervalRef.current = window.setInterval(() => {
+        setCurrentFactIndex(prev => (prev + 1) % randomFacts.length);
+      }, 3000);
+    }
 
-  const prevFact = () => {
-    setCurrentFactIndex((prev) => (prev - 1 + randomFacts.length) % randomFacts.length);
-  };
+    return () => {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isHovering]);
+
+  const nextFact = () => setCurrentFactIndex(prev => (prev + 1) % randomFacts.length);
+  const prevFact = () => setCurrentFactIndex(prev => (prev - 1 + randomFacts.length) % randomFacts.length);
 
   return (
     <section id="about" className="py-20 bg-gradient-secondary">
@@ -72,7 +86,7 @@ const About = () => {
                     key={index}
                     onClick={() => setCurrentFactIndex(index)}
                     className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentFactIndex ? 'bg-primary w-8' : 'bg-primary/30'
+                      index === currentFactIndex ? "bg-primary w-8" : "bg-primary/30"
                     }`}
                   />
                 ))}
@@ -80,25 +94,29 @@ const About = () => {
             </div>
 
             {/* Fact Cards Stack */}
-            <div className="relative h-80 w-full max-w-md mx-auto lg:mx-0">
+            <div
+              className="relative h-80 w-full max-w-md mx-auto lg:mx-0"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
               {randomFacts.map((fact, index) => {
                 const Icon = fact.icon;
                 const isActive = index === currentFactIndex;
                 const offset = index - currentFactIndex;
                 const isVisible = Math.abs(offset) <= 2;
-                
+
                 if (!isVisible) return null;
-                
+
                 const zIndex = randomFacts.length - Math.abs(offset);
                 const scale = isActive ? 1 : 0.95 - Math.abs(offset) * 0.05;
                 const translateY = offset * 12;
                 const rotate = offset * 8;
-                
+
                 return (
-                  <Card 
+                  <Card
                     key={index}
                     className={`absolute inset-0 cursor-pointer transition-all duration-500 hover-lift ${
-                      isActive ? 'shadow-2xl shadow-primary/20' : ''
+                      isActive ? "shadow-2xl shadow-primary/20" : ""
                     }`}
                     style={{
                       transform: `translateY(${translateY}px) scale(${scale}) rotate(${rotate}deg)`,
@@ -106,22 +124,20 @@ const About = () => {
                     }}
                     onClick={nextFact}
                   >
-                    <CardContent className={`p-6 h-full flex flex-col justify-center text-white ${fact.color} rounded-lg`}>
+                    <CardContent
+                      className={`p-6 h-full flex flex-col justify-center text-white ${fact.color} rounded-lg`}
+                    >
                       <div className="text-center">
                         <Icon className="h-12 w-12 mx-auto mb-4 opacity-90" />
-                        <h4 className="text-xl font-bold mb-4">
-                          {fact.title}
-                        </h4>
-                        <p className="text-sm leading-relaxed opacity-90">
-                          {fact.description}
-                        </p>
+                        <h4 className="text-xl font-bold mb-4">{fact.title}</h4>
+                        <p className="text-sm leading-relaxed opacity-90">{fact.description}</p>
                       </div>
                     </CardContent>
                   </Card>
                 );
               })}
             </div>
-            
+
             {/* Navigation arrows */}
             <div className="flex justify-center gap-4 mt-6">
               <button
@@ -144,33 +160,18 @@ const About = () => {
           </div>
 
           {/* Right side - About content */}
-          <div className="space-y-6">
-            <div className="prose prose-lg max-w-none text-muted-foreground">
-              <p className="text-lg leading-relaxed mb-6">
-                I am <span className="gradient-text font-semibold">Md. Abu Sufyan</span>, a dedicated Computer Science & Engineering graduate from 
-                Rajshahi University of Engineering & Technology (RUET), Bangladesh. My expertise lies 
-                in <span className="text-primary font-medium">Machine Learning</span>, <span className="text-primary font-medium">Deep Learning</span>, and <span className="text-primary font-medium">Artificial Intelligence</span>, with applications 
-                spanning across Bioinformatics, Medical Imaging, and other advanced technological 
-                domains.
-              </p>
-              
-              <p className="text-lg leading-relaxed mb-6">
-                Throughout my academic journey, I have engaged in intensive research 
-                projects that apply theoretical knowledge to real-world challenges, and I am 
-                committed to pushing the boundaries of technology to create innovative solutions.
-              </p>
-              
-              <p className="text-lg leading-relaxed mb-8">
-                I am passionate about pursuing higher studies to deepen my knowledge in technology 
-                and research, with a strong focus on solving real-life problems through innovation. My 
-                continuous drive to explore cutting-edge technologies fuels my ambition to advance in 
-                fields like AI, Machine Learning, and Deep Learning. With experience as an R&D 
-                Engineer and participation in numerous leadership roles, I am eager to contribute to 
-                impactful projects that address complex societal challenges while staying at the 
-                forefront of technological advancements.
-              </p>
-            </div>
+          <div className="space-y-6 prose prose-lg max-w-none text-muted-foreground">
+            <p className="text-lg leading-relaxed mb-6">
+              I am <span className="gradient-text font-semibold">{personal.name}</span>, a dedicated {personal.degree} graduate from {personal.university}. My expertise lies in <span className="text-primary font-medium">Machine Learning</span>, <span className="text-primary font-medium">Deep Learning</span>, and <span className="text-primary font-medium">Artificial Intelligence</span>, with applications spanning Bioinformatics, Medical Imaging, and advanced technological domains.
+            </p>
 
+            <p className="text-lg leading-relaxed mb-6">
+              Throughout my academic journey, I have engaged in intensive research projects that apply theoretical knowledge to real-world challenges, and I am committed to pushing the boundaries of technology to create innovative solutions.
+            </p>
+
+            <p className="text-lg leading-relaxed mb-8">
+              I am passionate about pursuing higher studies to deepen my knowledge in technology and research, with a strong focus on solving real-life problems through innovation. My continuous drive to explore cutting-edge technologies fuels my ambition to advance in fields like AI, Machine Learning, and Deep Learning. With experience as an R&D Engineer and participation in numerous leadership roles, I am eager to contribute to impactful projects that address complex societal challenges while staying at the forefront of technological advancements.
+            </p>
           </div>
         </div>
       </div>

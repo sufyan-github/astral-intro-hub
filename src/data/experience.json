@@ -2,11 +2,12 @@
   {
     "title": "Machine Learning & AI Instructor",
     "company": "Artificial Intelligence Bangladesh",
+    "logo": "/assets/logo/aibd.jpeg",
     "location": "High Tech Park, Silicon Tower, Rajshahi, Bangladesh",
     "period": "March 2024 – Present",
     "website": "aibd.ai",
     "description": [
-      "Conducted hands-on training sessions on Machine Learning, Deep Learning, Computer Vision and Data Science",
+      "Conducted hands-on training sessions on Machine Learning, Deep Learning, Computer Vision, and Data Science",
       "Designed and delivered course materials covering supervised/unsupervised learning, model evaluation, and deployment workflows",
       "Mentored learners through practical projects, improving their problem-solving and coding skills in Python and ML frameworks",
       "Collaborated with AI Bangladesh community initiatives to expand outreach and promote applied AI education"
@@ -16,6 +17,7 @@
   {
     "title": "President",
     "company": "RUET IoT Club",
+    "logo": "/assets/logo/iot_club.png",
     "location": "Rajshahi University of Engineering & Technology, Bangladesh",
     "period": "Feb 2025 – Present",
     "website": "ruetiotclub.org",
@@ -28,6 +30,7 @@
   {
     "title": "Research Assistant",
     "company": "Machine Learning Research Group",
+    "logo": "/assets/logo/research.jpeg",
     "location": "Department of CSE, RUET, Rajshahi-6204, Bangladesh",
     "period": "Jul 2024 – Present",
     "supervisor": "Assistant Prof. SM Mehedi Hasan",
@@ -40,6 +43,7 @@
   {
     "title": "Campus Representative",
     "company": "FutureNation Volunteer",
+    "logo": "/assets/logo/futurenation.jpeg",
     "location": "RUET, Rajshahi, Bangladesh",
     "period": "Jun 2025 – Present",
     "website": "futurenation.gov.bd",
