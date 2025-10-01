@@ -1,17 +1,10 @@
-import React, { useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useMemo, useState } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Calendar, Code } from "lucide-react";
+import { Github, ExternalLink, Calendar, Tag } from "lucide-react";
 import demoTrafficImage from "@/assets/demo-traffic.jpg";
 import demoHealthTrackerImage from "@/assets/demo-healthtracker.png";
-
-// ================================================
-// JSON-DRIVEN PROJECTS
-// Put your data in: src/data/projects.json
-// Ensure tsconfig has: "resolveJsonModule": true, "esModuleInterop": true
-// ================================================
-
 import projectsData from "@/data/projects.json";
 
 interface Project {
@@ -19,7 +12,7 @@ interface Project {
   title: string;
   description: string;
   technologies: string[];
-  project_type: string; // e.g., "AI/ML", "Research", "Mobile", "Web Development"
+  project_type: string;
   year: string;
   featured: boolean;
   github_url?: string | null;
@@ -27,52 +20,24 @@ interface Project {
   image_url?: string | null;
 }
 
-// Tech logo component for project technologies
-const TechLogo = ({ name }: { name: string }) => {
-  const getTechIcon = (techName: string) => {
-    const name = techName.toLowerCase();
-    if (name.includes("yolo") || name.includes("detection")) return "🎯";
-    if (name.includes("mobilenet") || name.includes("resnet")) return "📱";
-    if (name.includes("python")) return "🐍";
-    if (name.includes("computer vision")) return "👁️";
-    if (name.includes("machine learning") || name.includes("ml")) return "🤖";
-    if (name.includes("deep learning") || name.includes("dl")) return "🧠";
-    if (name.includes("nlp")) return "💬";
-    if (name.includes("lstm") || name.includes("gru")) return "🔄";
-    if (name.includes("time series")) return "📈";
-    if (name.includes("healthcare")) return "🏥";
-    if (name.includes("flutter")) return "💙";
-    if (name.includes("dart")) return "🎯";
-    if (name.includes("firebase")) return "🔥";
-    if (name.includes("react")) return "⚛️";
-    if (name.includes("tailwind")) return "🎨";
-    if (name.includes("node")) return "💚";
-    if (name.includes("express")) return "🚀";
-    if (name.includes("mysql")) return "🗃️";
-    if (name.includes("php") || name.includes("laravel")) return "🐘";
-    return "💻";
-  };
-
-  return <span className="text-sm mr-1">{getTechIcon(name)}</span>;
-};
-
 const getTypeColor = (type: string) => {
   switch (type) {
     case "AI/ML":
-      return "bg-gradient-primary";
+      return "bg-primary/20 text-primary border-primary/30";
     case "Research":
-      return "bg-gradient-accent";
+      return "bg-accent/20 text-accent border-accent/30";
     case "Mobile":
-      return "bg-secondary";
+      return "bg-blue-500/20 text-blue-400 border-blue-500/30";
     case "Web Development":
-      return "bg-accent";
+      return "bg-purple-500/20 text-purple-400 border-purple-500/30";
     default:
-      return "bg-muted";
+      return "bg-muted text-muted-foreground border-border";
   }
 };
 
 const Projects: React.FC = () => {
-  // If you need sorting/filtering, do it here with useMemo
+  const [filter, setFilter] = useState<string>("all");
+
   const projects = useMemo(() => {
     const projectsList = projectsData as Project[];
     return projectsList.map(project => ({
@@ -83,85 +48,113 @@ const Projects: React.FC = () => {
     }));
   }, []);
 
+  const filteredProjects = filter === "all" 
+    ? projects 
+    : projects.filter(p => p.project_type === filter);
+
+  const projectTypes = ["all", ...Array.from(new Set(projects.map(p => p.project_type)))];
+
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" className="py-20 bg-gradient-secondary">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 gradient-text">Featured Projects</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Innovative solutions spanning AI research, web development, and mobile applications
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text font-display">Featured Projects</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Real-world solutions spanning AI research, web development, and mobile applications
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+        {/* Filter Tags */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {projectTypes.map((type) => (
+            <Button
+              key={type}
+              variant={filter === type ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilter(type)}
+              className={filter === type ? "bg-primary" : ""}
+            >
+              {type === "all" ? "All Projects" : type}
+            </Button>
+          ))}
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {filteredProjects.map((project, index) => (
             <Card
               key={project.id}
-              className={`hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up ${
-                project.featured ? "border-primary shadow-glow" : ""
+              className={`group overflow-hidden bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-glow ${
+                project.featured ? "ring-2 ring-primary/20" : ""
               }`}
-              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardHeader>
-                {/* Project Image */}
-                {project.image_url && (
-                  <div className="w-full h-48 overflow-hidden rounded-lg mb-4">
-                    <img 
-                      src={project.image_url} 
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = "/projects/placeholder.jpg";
-                      }}
-                    />
-                  </div>
-                )}
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <CardTitle className="text-xl mb-2">{project.title}</CardTitle>
-                    <div className="flex items-center space-x-4">
-                      <Badge className={`${getTypeColor(project.project_type)} text-white`}>
-                        {project.project_type}
-                      </Badge>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        {project.year}
-                      </div>
-                    </div>
-                  </div>
+              {/* Project Image */}
+              {project.image_url && (
+                <div className="relative w-full h-56 overflow-hidden bg-muted">
+                  <img 
+                    src={project.image_url} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.src = "/projects/placeholder.jpg";
+                    }}
+                  />
                   {project.featured && (
-                    <Badge variant="outline" className="text-primary border-primary">
+                    <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground border-0">
                       Featured
                     </Badge>
                   )}
                 </div>
+              )}
+
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <Badge variant="outline" className={getTypeColor(project.project_type)}>
+                        <Tag className="h-3 w-3 mr-1" />
+                        {project.project_type}
+                      </Badge>
+                      <span className="flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {project.year}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </CardHeader>
 
-              <CardContent>
-                <p className="text-muted-foreground mb-6 leading-relaxed">{project.description}</p>
+              <CardContent className="pt-0">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  {project.description}
+                </p>
 
+                {/* Technologies */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.technologies.map((tech, techIndex) => (
                     <Badge
                       key={`${project.id}-tech-${techIndex}`}
                       variant="secondary"
-                      className="hover-lift animate-scale-in flex items-center"
-                      style={{ animationDelay: `${(index * 3 + techIndex) * 0.05}s` }}
+                      className="text-xs bg-secondary/50 hover:bg-secondary transition-colors"
                     >
-                      <TechLogo name={tech} />
                       {tech}
                     </Badge>
                   ))}
                 </div>
 
-                <div className="flex space-x-3">
+                {/* Action Buttons */}
+                <div className="flex gap-3">
                   {project.github_url && project.github_url !== "#" && (
                     <Button
                       asChild
                       variant="outline"
                       size="sm"
-                      className="glow-border hover-lift"
+                      className="border-border hover:border-primary/50"
                     >
                       <a href={project.github_url} target="_blank" rel="noreferrer">
                         <Github className="h-4 w-4 mr-2" /> Code
@@ -172,33 +165,18 @@ const Projects: React.FC = () => {
                   {project.demo_url && project.demo_url !== "#" && (
                     <Button
                       asChild
-                      variant="outline"
                       size="sm"
-                      className="glow-border hover-lift"
+                      className="bg-primary hover:bg-primary/90"
                     >
                       <a href={project.demo_url} target="_blank" rel="noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" /> Demo
+                        <ExternalLink className="h-4 w-4 mr-2" /> Live Demo
                       </a>
                     </Button>
                   )}
-
-                  {(!project.github_url || project.github_url === "#") &&
-                    (!project.demo_url || project.demo_url === "#") && (
-                      <Badge variant="secondary" className="flex items-center">
-                        <Code className="h-4 w-4 mr-2" />
-                        Coming Soon
-                      </Badge>
-                    )}
                 </div>
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <Button size="lg" variant="outline" className="glow-border hover-lift">
-            View All Projects
-          </Button>
         </div>
       </div>
     </section>

@@ -8,57 +8,29 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
-
-// Import JSON data
 import contactInfoData from '@/data/contactInfo.json';
 import availabilityData from '@/data/availability.json';
 
-// Validation schema
 const contactSchema = z.object({
-  name: z.string()
-    .trim()
-    .min(1, 'Name is required')
-    .max(100, 'Name must be less than 100 characters'),
-  email: z.string()
-    .trim()
-    .email('Please enter a valid email address')
-    .max(255, 'Email must be less than 255 characters'),
-  subject: z.string()
-    .trim()
-    .min(1, 'Subject is required')
-    .max(200, 'Subject must be less than 200 characters'),
-  message: z.string()
-    .trim()
-    .min(10, 'Message must be at least 10 characters')
-    .max(2000, 'Message must be less than 2000 characters'),
+  name: z.string().trim().min(1, 'Name is required').max(100),
+  email: z.string().trim().email('Valid email required').max(255),
+  subject: z.string().trim().min(1, 'Subject is required').max(200),
+  message: z.string().trim().min(10, 'Message must be at least 10 characters').max(2000),
 });
 
-// Map icon names from JSON to Lucide icons
 const iconsMap: Record<string, any> = {
-  Mail,
-  Phone,
-  MapPin,
-  Linkedin,
-  Github,
+  Mail, Phone, MapPin, Linkedin, Github,
 };
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+    name: '', email: '', subject: '', message: '',
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,10 +38,8 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      // Validate form data
       const validatedData = contactSchema.parse(formData);
 
-      // Insert into Supabase "contacts" table with validated data
       const { error } = await supabase.from('contacts').insert([{
         name: validatedData.name,
         email: validatedData.email,
@@ -79,32 +49,16 @@ const Contact = () => {
 
       if (error) throw error;
 
-      // Call edge function to send emails
-      const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
-        body: {
-          name: validatedData.name,
-          email: validatedData.email,
-          subject: validatedData.subject,
-          message: validatedData.message,
-        },
+      await supabase.functions.invoke('send-contact-email', {
+        body: validatedData,
       });
-
-      if (emailError) {
-        console.error('Email sending error:', emailError);
-      }
 
       toast({
         title: 'Message sent successfully!',
-        description: "Thanks for reaching out. I'll get back to you soon.",
+        description: "Thanks for reaching out. I'll respond soon.",
       });
 
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
@@ -113,10 +67,9 @@ const Contact = () => {
           variant: 'destructive',
         });
       } else {
-        console.error('Contact form error:', error);
         toast({
           title: 'Error sending message',
-          description: 'Something went wrong. Please try again.',
+          description: 'Please try again later.',
           variant: 'destructive',
         });
       }
@@ -126,47 +79,43 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="py-20 bg-gradient-secondary">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 gradient-text">Get In Touch</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Let's collaborate on exciting AI projects or discuss research opportunities
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text font-display">Get In Touch</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Let's collaborate on exciting projects or discuss opportunities
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
+        <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
+          {/* Contact Info - Sidebar */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="bg-card/50 backdrop-blur-sm border-border">
               <CardHeader>
-                <CardTitle className="text-2xl">Contact Information</CardTitle>
+                <CardTitle className="text-xl">Contact Info</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-4">
                 {contactInfoData.map((contact, index) => {
                   const Icon = iconsMap[contact.icon];
                   return (
-                    <div
-                      key={index}
-                      className="flex items-center space-x-4 animate-scale-in"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="p-3 bg-gradient-primary rounded-lg">
-                        <Icon className="h-5 w-5 text-primary-foreground" />
+                    <div key={index} className="flex items-start space-x-3">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Icon className="h-5 w-5 text-primary" />
                       </div>
-                      <div className="flex-1">
-                        <p className="font-medium">{contact.label}</p>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-muted-foreground">{contact.label}</p>
                         {contact.link ? (
                           <a
                             href={contact.link}
-                            className="text-muted-foreground hover:text-primary transition-colors"
+                            className="text-foreground hover:text-primary transition-colors break-words"
                             target={contact.link.startsWith('http') ? '_blank' : undefined}
                             rel={contact.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                           >
                             {contact.value}
                           </a>
                         ) : (
-                          <p className="text-muted-foreground">{contact.value}</p>
+                          <p className="text-foreground break-words">{contact.value}</p>
                         )}
                       </div>
                     </div>
@@ -175,18 +124,14 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
+            <Card className="bg-card/50 backdrop-blur-sm border-border">
               <CardHeader>
-                <CardTitle className="text-2xl">Available For</CardTitle>
+                <CardTitle className="text-xl">Available For</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2">
                   {availabilityData.map((item, index) => (
-                    <Badge
-                      key={index}
-                      className="bg-gradient-accent text-accent-foreground px-3 py-2 hover-lift animate-scale-in"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
+                    <Badge key={index} variant="secondary" className="bg-secondary/50">
                       {item}
                     </Badge>
                   ))}
@@ -196,7 +141,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
+          <Card className="lg:col-span-3 bg-card/50 backdrop-blur-sm border-border">
             <CardHeader>
               <CardTitle className="text-2xl">Send a Message</CardTitle>
             </CardHeader>
@@ -204,64 +149,56 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Name
-                    </label>
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">Name *</label>
                     <Input
                       id="name"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Your name"
-                      className="glow-border"
                       required
+                      className="bg-background border-border"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Email
-                    </label>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="your.email@example.com"
-                      className="glow-border"
+                      placeholder="your@email.com"
                       required
+                      className="bg-background border-border"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                    Subject
-                  </label>
+                  <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject *</label>
                   <Input
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    placeholder="What would you like to discuss?"
-                    className="glow-border"
+                    placeholder="What's this about?"
                     required
+                    className="bg-background border-border"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Message
-                  </label>
+                  <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
                   <Textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="Tell me more about your project or inquiry..."
+                    placeholder="Tell me about your project or inquiry..."
                     rows={6}
-                    className="glow-border resize-none"
                     required
+                    className="bg-background border-border resize-none"
                   />
                 </div>
 
@@ -269,7 +206,7 @@ const Contact = () => {
                   type="submit"
                   size="lg"
                   disabled={loading}
-                  className="w-full bg-gradient-primary hover:shadow-glow animate-pulse-glow"
+                  className="w-full bg-primary hover:bg-primary/90 font-semibold"
                 >
                   <Send className="h-5 w-5 mr-2" />
                   {loading ? 'Sending...' : 'Send Message'}
