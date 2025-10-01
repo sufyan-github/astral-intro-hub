@@ -119,12 +119,12 @@ const Navigation: React.FC = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             {(cfg.items || []).map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative transition-colors duration-200 hover-lift ${
+                className={`relative transition-colors duration-200 hover-lift text-sm xl:text-base ${
                   isActive(item.href)
                     ? "text-primary"
                     : "text-muted-foreground hover:text-primary"
@@ -152,7 +152,7 @@ const Navigation: React.FC = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               aria-expanded={isMobileMenuOpen}
               aria-controls="primary-mobile-menu"
@@ -172,7 +172,7 @@ const Navigation: React.FC = () => {
           <div
             id="primary-mobile-menu"
             ref={mobileMenuRef}
-            className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border shadow-card animate-slide-up"
+            className="lg:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border shadow-card animate-slide-up"
             role="dialog"
             aria-modal="true"
           >
