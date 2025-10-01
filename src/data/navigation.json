@@ -6,10 +6,16 @@
   "items": [
     { "name": "Home", "href": "#home" },
     { "name": "About", "href": "#about" },
+    { "name": "Academic", "href": "#academic" },
     { "name": "Experience", "href": "#experience" },
     { "name": "Skills", "href": "#skills" },
     { "name": "Projects", "href": "#projects" },
     { "name": "Research", "href": "#research" },
+    { "name": "Certifications", "href": "#certifications" },
+    { "name": "Achievements", "href": "#achievements" },
+    { "name": "Memberships", "href": "#memberships" },
+    { "name": "Articles", "href": "#articles" },
+    { "name": "Testimonials", "href": "#testimonials" },
     { "name": "Contact", "href": "#contact" }
   ]
 }

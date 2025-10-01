@@ -1,0 +1,42 @@
+{
+  "title": "Professional Memberships",
+  "subtitle": "Active participation in tech communities and professional organizations",
+  "memberships": [
+    {
+      "name": "RUET Computing Society",
+      "role": "Member",
+      "logo": "/assets/logo/research.jpeg",
+      "description": "Active member contributing to computing initiatives and tech events"
+    },
+    {
+      "name": "RUET IoT Club",
+      "role": "Member",
+      "logo": "/assets/logo/iot_club.png",
+      "description": "Engaged in IoT projects and research activities"
+    },
+    {
+      "name": "Volunteer For Bangladesh",
+      "role": "Volunteer",
+      "logo": "/assets/logo/futurenation.jpeg",
+      "description": "Contributing to social welfare and community development"
+    },
+    {
+      "name": "Futurenation",
+      "role": "Member",
+      "logo": "/assets/logo/futurenation.jpeg",
+      "description": "Participating in future-focused tech initiatives"
+    },
+    {
+      "name": "Programming Hero",
+      "role": "Active Learner",
+      "logo": "/assets/logo/research.jpeg",
+      "description": "Continuous learning and skill development"
+    },
+    {
+      "name": "WSDA New Zealand",
+      "role": "Member",
+      "logo": "/assets/logo/aibd.jpeg",
+      "description": "International web and software development association"
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import FloatingTechElements from "@/components/FloatingTechElements";
 import GitHubHeatmap from "@/components/GitHubHeatmap";
 import Certifications from "@/components/Certifications";
 import Achievements from "@/components/Achievements";
+import Memberships from "@/components/Memberships";
 import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
@@ -55,6 +56,7 @@ const Index = () => {
           <GitHubHeatmap />
           <Certifications />
           <Achievements />
+          <Memberships />
           <Projects />
           <Research />
           <Blog />
