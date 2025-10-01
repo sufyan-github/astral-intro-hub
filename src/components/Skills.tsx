@@ -1,140 +1,7 @@
-// import React from "react";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Progress } from "@/components/ui/progress";
-// import { Code, Database, Brain, Wrench } from "lucide-react";
-
-// import skills from "@/data/skills.json" assert { type: "json" };
-
-// export type SkillItem = { name: string; level: number };
-// export type SkillCategory = {
-//   title: string;
-//   icon: "code" | "brain" | "database" | "wrench";
-//   skills: SkillItem[];
-// };
-
-// const iconMap = {
-//   code: Code,
-//   brain: Brain,
-//   database: Database,
-//   wrench: Wrench,
-// } as const;
-
-// // Tech logo emoji with hover animation
-// const TechLogo = ({ name }: { name: string }) => {
-//   const getTechIcon = (techName: string) => {
-//     const n = techName.toLowerCase();
-//     if (n.includes("python")) return "🐍";
-//     if (n.includes("javascript")) return "⚡";
-//     if (n.includes("react")) return "⚛️";
-//     if (n.includes("node")) return "💚";
-//     if (n.includes("html") || n.includes("css")) return "🌐";
-//     if (n.includes("tailwind")) return "🎨";
-//     if (n.includes("machine learning") || n.includes("ml")) return "🤖";
-//     if (n.includes("deep learning") || n.includes("dl")) return "🧠";
-//     if (n.includes("computer vision")) return "👁️";
-//     if (n.includes("nlp")) return "💬";
-//     if (n.includes("tensorflow") || n.includes("pytorch")) return "📊";
-//     if (n.includes("data science")) return "📈";
-//     if (n.includes("mysql")) return "🗃️";
-//     if (n.includes("mongodb")) return "🍃";
-//     if (n.includes("express")) return "🚀";
-//     if (n.includes("php") || n.includes("laravel")) return "🐘";
-//     if (n.includes("firebase")) return "🔥";
-//     if (n.includes("rest api")) return "🌍";
-//     if (n.includes("git") || n.includes("github")) return "📚";
-//     if (n.includes("vs code")) return "📝";
-//     if (n.includes("docker")) return "🐳";
-//     if (n.includes("postman")) return "📮";
-//     if (n.includes("figma")) return "🎯";
-//     if (n.includes("linux")) return "🐧";
-//     return "💻";
-//   };
-
-//   return (
-//     <span className="text-lg mr-2 transition-transform duration-300 hover:scale-125">
-//       {getTechIcon(name)}
-//     </span>
-//   );
-// };
-
-// const Skills: React.FC = () => {
-//   const skillCategories = skills as SkillCategory[];
-
-//   return (
-//     <section id="skills" className="py-20 bg-gradient-to-b from-background via-muted/30 to-background">
-//       <div className="container mx-auto px-6">
-//         {/* Section Heading */}
-//         <div className="text-center mb-16">
-//           <h2 className="text-4xl font-extrabold mb-4 gradient-text drop-shadow-sm">
-//             Skills & Expertise
-//           </h2>
-//           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-//             Technical proficiency across multiple domains with a focus on{" "}
-//             <span className="text-primary font-semibold">AI</span> and{" "}
-//             <span className="text-primary font-semibold">Web Development</span>.
-//           </p>
-//         </div>
-
-//         {/* Skills Grid */}
-//         <div className="grid md:grid-cols-2 gap-8">
-//           {skillCategories.map((category, index) => {
-//             const Icon = iconMap[category.icon] ?? Code;
-//             return (
-//               <Card
-//                 key={category.title + index}
-//                 className="hover:shadow-lg hover:border-primary/40 transition-all duration-300 bg-card/60 backdrop-blur-xl rounded-2xl border border-border/50"
-//                 style={{ animationDelay: `${index * 0.2}s` }}
-//               >
-//                 <CardHeader className="pb-4">
-//                   <CardTitle className="flex items-center text-xl font-bold text-foreground">
-//                     <span className="p-2 rounded-lg bg-primary/10 mr-3">
-//                       <Icon className="h-6 w-6 text-primary" />
-//                     </span>
-//                     {category.title}
-//                   </CardTitle>
-//                 </CardHeader>
-//                 <CardContent>
-//                   <div className="space-y-5">
-//                     {category.skills.map((skill, skillIndex) => (
-//                       <div key={skill.name + skillIndex} className="space-y-2">
-//                         <div className="flex justify-between items-center">
-//                           <div className="flex items-center">
-//                             <TechLogo name={skill.name} />
-//                             <span className="font-medium">{skill.name}</span>
-//                           </div>
-//                           <span className="text-sm text-muted-foreground font-medium">
-//                             {skill.level}%
-//                           </span>
-//                         </div>
-//                         <Progress
-//                           value={skill.level}
-//                           className="h-2 rounded-full overflow-hidden"
-//                         >
-//                           <div
-//                             className="h-full bg-gradient-to-r from-primary to-primary/70 transition-all duration-700 ease-out"
-//                             style={{ width: `${skill.level}%` }}
-//                           />
-//                         </Progress>
-//                       </div>
-//                     ))}
-//                   </div>
-//                 </CardContent>
-//               </Card>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Skills;
-
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Code, Database, Brain, Wrench } from "lucide-react";
-
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Code, Database, Brain, Wrench, Sparkles, Award, TrendingUp } from "lucide-react";
 import skills from "@/data/skills.json" assert { type: "json" };
 
 // ===============================
@@ -220,7 +87,7 @@ const TechLogo = ({ name }: { name: string }) => {
     name.toLowerCase().includes(k)
   );
   return (
-    <span className="text-xl mr-2 transition-transform duration-300 hover:scale-125">
+    <span className="text-2xl mr-3 transition-transform duration-300 hover:scale-125">
       {key ? techIconMap[key] : "💻"}
     </span>
   );
@@ -232,64 +99,122 @@ const TechLogo = ({ name }: { name: string }) => {
 const Skills: React.FC = () => {
   const skillCategories = skills as SkillCategory[];
 
+  // Calculate stats
+  const totalSkills = skillCategories.reduce((sum, cat) => sum + cat.skills.length, 0);
+  const avgLevel = Math.round(
+    skillCategories.reduce(
+      (sum, cat) => sum + cat.skills.reduce((s, sk) => s + sk.level, 0),
+      0
+    ) / totalSkills
+  );
+
   return (
     <section
       id="skills"
-      className="py-20 bg-gradient-to-b from-background via-muted/30 to-background"
+      className="py-20 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden"
     >
-      <div className="container mx-auto px-6">
+      {/* Background Decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
         {/* Section Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold mb-4 gradient-text drop-shadow-sm">
-            Skills & Expertise
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <div className="inline-flex items-center justify-center space-x-2 mb-4">
+            <Sparkles className="h-8 w-8 text-primary animate-pulse" />
+            <h2 className="text-5xl font-extrabold gradient-text font-display">
+              Skills & Expertise
+            </h2>
+            <Sparkles className="h-8 w-8 text-accent animate-pulse" />
+          </div>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Technical proficiency across multiple domains with a focus on{" "}
-            <span className="text-primary font-semibold">AI</span> and{" "}
-            <span className="text-primary font-semibold">Web Development</span>.
+            <span className="text-primary font-semibold">Artificial Intelligence</span> and{" "}
+            <span className="text-accent font-semibold">Full-Stack Development</span>
           </p>
         </div>
 
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+          <Card className="text-center hover-lift glow-border bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border-primary/20">
+            <CardContent className="p-6">
+              <Award className="h-10 w-10 mx-auto mb-3 text-primary" />
+              <div className="text-3xl font-bold gradient-text mb-1">{totalSkills}+</div>
+              <div className="text-sm text-muted-foreground font-medium">Technical Skills</div>
+            </CardContent>
+          </Card>
+          <Card className="text-center hover-lift glow-border bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border-accent/20">
+            <CardContent className="p-6">
+              <TrendingUp className="h-10 w-10 mx-auto mb-3 text-accent" />
+              <div className="text-3xl font-bold gradient-text mb-1">{avgLevel}%</div>
+              <div className="text-sm text-muted-foreground font-medium">Average Proficiency</div>
+            </CardContent>
+          </Card>
+          <Card className="text-center hover-lift glow-border bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border-primary/20">
+            <CardContent className="p-6">
+              <Code className="h-10 w-10 mx-auto mb-3 text-primary" />
+              <div className="text-3xl font-bold gradient-text mb-1">{skillCategories.length}</div>
+              <div className="text-sm text-muted-foreground font-medium">Core Domains</div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {skillCategories.map((category, index) => {
             const Icon = iconMap[category.icon] ?? Code;
             return (
               <Card
                 key={category.title + index}
-                className="hover:shadow-lg hover:border-primary/40 transition-all duration-300 bg-card/60 backdrop-blur-xl rounded-2xl border border-border/50"
-                style={{ animationDelay: `${index * 0.2}s` }}
+                className="hover:shadow-2xl hover:border-primary/50 transition-all duration-500 bg-gradient-to-br from-card/90 to-card/60 backdrop-blur-xl rounded-3xl border-2 border-border/50 group overflow-hidden animate-fade-in"
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center text-xl font-bold text-foreground">
-                    <span className="p-2 rounded-lg bg-primary/10 mr-3">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </span>
-                    {category.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-5">
+                {/* Card Header with Gradient Background */}
+                <div className="relative p-6 pb-4 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-primary opacity-5 group-hover:opacity-10 transition-opacity" />
+                  <div className="relative flex items-center space-x-4">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-lg group-hover:blur-xl transition-all" />
+                      <div className="relative p-3 rounded-2xl bg-gradient-primary shadow-lg">
+                        <Icon className="h-7 w-7 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-bold gradient-text font-display">
+                      {category.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <CardContent className="px-6 pb-6">
+                  <div className="space-y-6">
                     {category.skills.map((skill, skillIndex) => (
-                      <div key={skill.name + skillIndex} className="space-y-2">
+                      <div key={skill.name + skillIndex} className="space-y-3">
                         <div className="flex justify-between items-center">
                           <div className="flex items-center">
                             <TechLogo name={skill.name} />
-                            <span className="font-medium">{skill.name}</span>
+                            <span className="font-semibold text-lg">{skill.name}</span>
                           </div>
-                          <span className="text-sm text-muted-foreground font-medium">
+                          <Badge 
+                            className="bg-primary/10 text-primary border-primary/30 px-3 py-1 text-sm font-bold"
+                          >
                             {skill.level}%
-                          </span>
+                          </Badge>
                         </div>
-                        <Progress
-                          value={skill.level}
-                          className="h-2 rounded-full overflow-hidden"
-                        >
+                        
+                        {/* Custom Progress Bar */}
+                        <div className="relative h-3 bg-muted/50 rounded-full overflow-hidden shadow-inner">
                           <div
-                            className="h-full bg-gradient-to-r from-primary to-primary/70 transition-all duration-700 ease-out"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </Progress>
+                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary via-accent to-primary rounded-full transition-all duration-1000 ease-out animate-shimmer"
+                            style={{ 
+                              width: `${skill.level}%`,
+                              animationDelay: `${(index * 3 + skillIndex) * 0.1}s`
+                            }}
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -297,6 +222,18 @@ const Skills: React.FC = () => {
               </Card>
             );
           })}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="mt-16 text-center">
+          <p className="text-muted-foreground text-lg mb-4">
+            Continuously learning and expanding my technical expertise
+          </p>
+          <div className="flex justify-center items-center space-x-2 text-primary">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: "0.2s" }} />
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: "0.4s" }} />
+          </div>
         </div>
       </div>
     </section>

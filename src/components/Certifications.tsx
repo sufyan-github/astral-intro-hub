@@ -100,7 +100,7 @@ const Certifications: React.FC = () => {
 
         {/* 3D Curved Carousel */}
         <div 
-          className="relative h-[450px] flex items-center justify-center perspective-1000 overflow-hidden"
+          className="relative h-[600px] flex items-center justify-center perspective-1000 overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -111,14 +111,14 @@ const Certifications: React.FC = () => {
               
               if (!isVisible) return null;
 
-              // 3D Curved positioning
-              const angle = position * 25; // Degrees
-              const radius = 280; // Distance from center
+              // 3D Curved positioning with larger cards
+              const angle = position * 28; // Degrees
+              const radius = 350; // Distance from center (increased for larger cards)
               const translateX = Math.sin((angle * Math.PI) / 180) * radius;
               const translateZ = Math.cos((angle * Math.PI) / 180) * radius - radius;
               const rotateY = -angle;
-              const scale = isCenter ? 1 : 0.85 - Math.abs(position) * 0.1;
-              const opacity = isCenter ? 1 : 0.7 - Math.abs(position) * 0.15;
+              const scale = isCenter ? 1 : 0.8 - Math.abs(position) * 0.08;
+              const opacity = isCenter ? 1 : 0.65 - Math.abs(position) * 0.12;
               
               return (
                 <div
@@ -140,7 +140,7 @@ const Certifications: React.FC = () => {
                     }
                   }}
                 >
-                  <Card className={`w-80 h-[400px] hover-lift glow-border bg-card/50 backdrop-blur-sm transition-all duration-300 ${
+                  <Card className={`w-[420px] h-[520px] hover-lift glow-border bg-card/50 backdrop-blur-sm transition-all duration-300 ${
                     isCenter ? 'shadow-2xl shadow-primary/20' : 'shadow-lg shadow-black/10'
                   }`}>
                     <CardHeader className="text-center pb-2">

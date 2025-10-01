@@ -189,6 +189,11 @@ All colors MUST be HSL.
     50% { opacity: 0.8; stroke-width: 2px; }
   }
 
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
   /* 3D Background Elements */
   .floating-cube {
     @apply absolute w-20 h-20 opacity-10;
@@ -293,5 +298,10 @@ All colors MUST be HSL.
   .animate-float, .animate-float-reverse, .animate-particle-float {
     will-change: transform;
     backface-visibility: hidden;
+  }
+
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
   }
 }

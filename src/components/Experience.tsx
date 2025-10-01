@@ -46,19 +46,19 @@ const Experience: React.FC = () => {
               }`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardContent className="p-8">
-                <div className="flex items-stretch gap-6 mb-6 min-h-[120px]">
-                  {/* Company Logo */}
-                  <div className="flex-shrink-0 flex items-center">
-                    <div className="w-60 h-60 rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden">
+              <CardContent className="p-6 md:p-8">
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  {/* Company Logo - Square, Full Height, Responsive */}
+                  <div className="flex-shrink-0 w-full md:w-32 lg:w-40 mx-auto md:mx-0">
+                    <div className="aspect-square w-full max-w-[200px] md:max-w-none mx-auto rounded-xl bg-white flex items-center justify-center shadow-lg overflow-hidden p-3 md:p-4">
                       {exp.logo ? (
                         <img
-                          src={exp.logo ? exp.logo : undefined} // Use full path from JSON
+                          src={exp.logo}
                           alt={exp.company}
-                          className="object-contain w-full h-full p-2"
+                          className="object-contain w-full h-full"
                         />
                       ) : (
-                        <span className="text-xl font-bold text-primary">
+                        <span className="text-2xl md:text-3xl font-bold text-primary">
                           {exp.company
                             .split(' ')
                             .map(word => word[0])

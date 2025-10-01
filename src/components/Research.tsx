@@ -56,26 +56,6 @@ const Research: React.FC = () => {
           </p>
         </div>
 
-        {/* Research Interests */}
-        <Card className="mb-12 hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">Research Interests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap justify-center gap-3">
-              {interests.map((interest, index) => (
-                <Badge
-                  key={interest + index}
-                  className="bg-gradient-primary text-primary-foreground px-4 py-2 text-sm hover-lift animate-scale-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {interest}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Publications */}
         <div className="space-y-8">
           {pubs.map((paper, index) => (
@@ -153,8 +133,28 @@ const Research: React.FC = () => {
           ))}
         </div>
 
+        {/* Research Interests - Moved Below Publications */}
+        <Card className="mt-12 mb-12 hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">Research Interests</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap justify-center gap-3">
+              {interests.map((interest, index) => (
+                <Badge
+                  key={interest + index}
+                  className="bg-gradient-primary text-primary-foreground px-4 py-2 text-sm hover-lift animate-scale-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {interest}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Research Assistant Info */}
-        <Card className="mt-12 hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
+        <Card className="hover-lift glow-border bg-card/50 backdrop-blur-sm animate-slide-up">
           <CardContent className="p-8 text-center">
             <h3 className="text-2xl font-bold mb-4">{ra.positionTitle}</h3>
             {ra.groupName && (

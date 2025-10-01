@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X, Download, Cpu } from "lucide-react";
 
 // =====================================================
 // JSON‑DRIVEN NAVIGATION WITH QUALITY‑OF‑LIFE UPGRADES
@@ -99,14 +99,22 @@ const Navigation: React.FC = () => {
 
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo with Tech Icon */}
           <div className="flex items-center">
             <button
               onClick={() => scrollToSection("#home")}
-              className="text-2xl font-bold gradient-text hover-lift"
+              className="flex items-center space-x-2 group hover-lift"
               aria-label={`${cfg.siteTitle} — go to home`}
             >
-              {cfg.siteTitle}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-primary rounded-lg blur opacity-50 group-hover:opacity-75 transition-opacity" />
+                <div className="relative bg-gradient-primary p-2 rounded-lg">
+                  <Cpu className="h-6 w-6 text-white animate-pulse" />
+                </div>
+              </div>
+              <span className="text-2xl font-bold gradient-text font-display">
+                MASC
+              </span>
             </button>
           </div>
 
