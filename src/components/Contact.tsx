@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -79,141 +80,217 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-secondary">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text font-display">Get In Touch</h2>
+    <section id="contact" className="py-20 bg-gradient-secondary relative overflow-hidden">
+      {/* Animated background blobs */}
+      <motion.div
+        className="absolute top-10 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+          x: [0, 50, 0],
+          y: [0, 30, 0],
+        }}
+        transition={{ duration: 10, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-10 right-10 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.3, 0.5, 0.3],
+          x: [0, -50, 0],
+          y: [0, -30, 0],
+        }}
+        transition={{ duration: 12, repeat: Infinity, delay: 2 }}
+      />
+
+      <div className="container mx-auto px-6 relative z-10">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 font-display">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+              Get In Touch
+            </span>
+          </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Let's collaborate on exciting projects or discuss opportunities
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
           {/* Contact Info - Sidebar */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card className="bg-card/50 backdrop-blur-sm border-border">
+          <motion.div 
+            className="lg:col-span-2 space-y-6"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Card className="bg-card/80 backdrop-blur-xl border-2 border-primary/30 shadow-xl shadow-primary/10">
               <CardHeader>
-                <CardTitle className="text-xl">Contact Info</CardTitle>
+                <CardTitle className="text-xl text-foreground">Contact Info</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {contactInfoData.map((contact, index) => {
                   const Icon = iconsMap[contact.icon];
                   return (
-                    <div key={index} className="flex items-start space-x-3">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <Icon className="h-5 w-5 text-primary" />
+                    <motion.div 
+                      key={index} 
+                      className="flex items-start space-x-3"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="p-2 bg-gradient-to-br from-primary to-secondary rounded-lg">
+                        <Icon className="h-5 w-5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-muted-foreground">{contact.label}</p>
                         {contact.link ? (
                           <a
                             href={contact.link}
-                            className="text-foreground hover:text-primary transition-colors break-words"
+                            className="text-foreground hover:text-primary transition-colors break-words font-medium"
                             target={contact.link.startsWith('http') ? '_blank' : undefined}
                             rel={contact.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                           >
                             {contact.value}
                           </a>
                         ) : (
-                          <p className="text-foreground break-words">{contact.value}</p>
+                          <p className="text-foreground break-words font-medium">{contact.value}</p>
                         )}
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </CardContent>
             </Card>
 
-            <Card className="bg-card/50 backdrop-blur-sm border-border">
+            <Card className="bg-card/80 backdrop-blur-xl border-2 border-accent/30 shadow-xl shadow-accent/10">
               <CardHeader>
-                <CardTitle className="text-xl">Available For</CardTitle>
+                <CardTitle className="text-xl text-foreground">Available For</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {availabilityData.map((item, index) => (
-                    <Badge key={index} variant="secondary" className="bg-secondary/50">
-                      {item}
-                    </Badge>
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <Badge variant="secondary" className="bg-secondary/50 backdrop-blur-sm text-foreground border border-secondary/50">
+                        {item}
+                      </Badge>
+                    </motion.div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <Card className="lg:col-span-3 bg-card/50 backdrop-blur-sm border-border">
-            <CardHeader>
-              <CardTitle className="text-2xl">Send a Message</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">Name *</label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder="Your name"
-                      required
-                      className="bg-background border-border"
-                    />
+          <motion.div
+            className="lg:col-span-3"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Card className="bg-card/80 backdrop-blur-xl border-2 border-primary/30 shadow-2xl shadow-primary/20">
+              <CardHeader>
+                <CardTitle className="text-2xl text-foreground">Send a Message</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <motion.div
+                      whileFocus={{ scale: 1.02 }}
+                    >
+                      <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">Name *</label>
+                      <Input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Your name"
+                        required
+                        className="bg-background/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground"
+                      />
+                    </motion.div>
+                    <motion.div
+                      whileFocus={{ scale: 1.02 }}
+                    >
+                      <label htmlFor="email" className="block text-sm font-medium mb-2 text-foreground">Email *</label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="your@email.com"
+                        required
+                        className="bg-background/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground"
+                      />
+                    </motion.div>
                   </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
+
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                  >
+                    <label htmlFor="subject" className="block text-sm font-medium mb-2 text-foreground">Subject *</label>
                     <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
                       onChange={handleInputChange}
-                      placeholder="your@email.com"
+                      placeholder="What's this about?"
                       required
-                      className="bg-background border-border"
+                      className="bg-background/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground"
                     />
-                  </div>
-                </div>
+                  </motion.div>
 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject *</label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    placeholder="What's this about?"
-                    required
-                    className="bg-background border-border"
-                  />
-                </div>
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                  >
+                    <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">Message *</label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Tell me about your project or inquiry..."
+                      rows={6}
+                      required
+                      className="bg-background/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground resize-none"
+                    />
+                  </motion.div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Tell me about your project or inquiry..."
-                    rows={6}
-                    required
-                    className="bg-background border-border resize-none"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  disabled={loading}
-                  className="w-full bg-primary hover:bg-primary/90 font-semibold"
-                >
-                  <Send className="h-5 w-5 mr-2" />
-                  {loading ? 'Sending...' : 'Send Message'}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-primary to-secondary hover:shadow-2xl hover:shadow-primary/50 font-semibold border-0 text-white"
+                    >
+                      <Send className="h-5 w-5 mr-2" />
+                      {loading ? 'Sending...' : 'Send Message'}
+                    </Button>
+                  </motion.div>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </div>
     </section>

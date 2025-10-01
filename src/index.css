@@ -8,67 +8,68 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Professional Neutral Palette: Slate/Navy with Strategic Blue Accent */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Vibrant Diamond Blue Theme - High Visibility */
+    --background: 220 20% 12%;
+    --foreground: 0 0% 100%;
     
-    --card: 240 10% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 25% 18%;
+    --card-foreground: 0 0% 100%;
     
-    --popover: 240 10% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 25% 18%;
+    --popover-foreground: 0 0% 100%;
     
-    /* Primary: Professional Blue */
-    --primary: 217 91% 60%;
+    /* Primary: Diamond Blue */
+    --primary: 210 100% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 91% 70%;
+    --primary-glow: 210 100% 75%;
     
-    /* Secondary: Subtle slate */
-    --secondary: 240 5% 15%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary: Vibrant Cyan */
+    --secondary: 190 80% 50%;
+    --secondary-foreground: 220 20% 12%;
     
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 220 15% 25%;
+    --muted-foreground: 210 20% 75%;
     
-    /* Accent: Fresh Green for highlights */
-    --accent: 142 71% 45%;
+    /* Accent: Electric Purple */
+    --accent: 270 70% 60%;
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 63% 50%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 240 6% 20%;
-    --input: 240 6% 20%;
-    --ring: 217 91% 60%;
+    --border: 210 40% 35%;
+    --input: 220 25% 20%;
+    --ring: 210 100% 60%;
     
     --radius: 0.75rem;
     
-    /* Professional Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 70%) 100%);
-    --gradient-secondary: linear-gradient(180deg, hsl(240 10% 5%) 0%, hsl(240 10% 7%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(142 71% 45%) 0%, hsl(142 71% 55%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(240 10% 3.9%) 0%, hsl(240 15% 7%) 50%, hsl(217 91% 10%) 100%);
+    /* Vibrant Gradients with Diamond Blue */
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 60%) 0%, hsl(190 80% 50%) 100%);
+    --gradient-secondary: linear-gradient(180deg, hsl(220 20% 15%) 0%, hsl(220 25% 20%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(270 70% 60%) 0%, hsl(210 100% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 20% 12%) 0%, hsl(210 50% 20%) 50%, hsl(210 100% 25%) 100%);
+    --gradient-diamond: radial-gradient(circle at 50% 50%, hsl(210 100% 70%) 0%, hsl(210 100% 50%) 50%, hsl(210 80% 35%) 100%);
     
-    /* Refined Shadows */
-    --shadow-glow: 0 0 40px hsla(217, 91%, 60%, 0.25);
-    --shadow-card: 0 8px 32px hsla(0, 0%, 0%, 0.4);
-    --shadow-elevation: 0 20px 60px hsla(0, 0%, 0%, 0.6);
+    /* Glowing Shadows */
+    --shadow-glow: 0 0 60px hsla(210, 100%, 60%, 0.5), 0 0 30px hsla(190, 80%, 50%, 0.3);
+    --shadow-card: 0 10px 40px hsla(210, 100%, 50%, 0.2);
+    --shadow-elevation: 0 20px 80px hsla(210, 100%, 50%, 0.4);
 
     /* Sidebar */
-    --sidebar-background: 240 10% 7%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 220 25% 18%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 210 100% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 6% 20%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 220 15% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 210 40% 35%;
+    --sidebar-ring: 210 100% 60%;
   }
 
   .dark {
-    /* Explicit dark mode (already dark by default) */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Explicit dark mode with vibrant blue theme */
+    --background: 220 20% 12%;
+    --foreground: 0 0% 100%;
   }
 }
 

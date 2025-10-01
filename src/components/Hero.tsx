@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Github, Linkedin, Mail, Brain, Cpu, Database } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail, Brain, Cpu, Database, Sparkles } from "lucide-react";
 import Lottie from "lottie-react";
 import ResumeDownload from "@/components/ResumeDownload";
 import heroData from "@/data/hero.json";
@@ -78,9 +79,9 @@ const iconForChip = (icon: "brain" | "cpu" | "db") => {
     case "brain":
       return <Brain className="h-4 w-4 mr-2 text-primary" />;
     case "cpu":
-      return <Cpu className="h-4 w-4 mr-2 text-accent" />;
+      return <Cpu className="h-4 w-4 mr-2 text-secondary" />;
     case "db":
-      return <Database className="h-4 w-4 mr-2 text-secondary-foreground" />;
+      return <Database className="h-4 w-4 mr-2 text-accent" />;
   }
 };
 
@@ -98,66 +99,179 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
-      {/* Subtle grid pattern background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]" aria-hidden />
+      {/* Animated grid pattern */}
+      <motion.div 
+        className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f620_1px,transparent_1px),linear-gradient(to_bottom,#3b82f620_1px,transparent_1px)] bg-[size:4rem_4rem]"
+        animate={{
+          backgroundPosition: ["0px 0px", "64px 64px"],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        aria-hidden
+      />
+
+      {/* Floating particles */}
+      {!prefersReducedMotion() && (
+        <>
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary rounded-full"
+              initial={{ 
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                opacity: 0.3,
+              }}
+              animate={{
+                y: [null, -100, 100, -50, 0],
+                x: [null, 50, -50, 30, -30],
+                opacity: [0.3, 0.6, 0.3, 0.7, 0.3],
+              }}
+              transition={{
+                duration: 10 + i * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </>
+      )}
 
       {/* Lottie Animation - Top Right */}
       {!prefersReducedMotion() && (
-        <div className="absolute top-16 right-8 w-72 h-72 opacity-30 pointer-events-none hidden lg:block" aria-hidden>
+        <motion.div 
+          className="absolute top-16 right-8 w-72 h-72 opacity-40 pointer-events-none hidden lg:block"
+          animate={{ 
+            rotate: [0, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+            scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+          }}
+          aria-hidden
+        >
           <Lottie animationData={techAnimation} loop={true} />
-        </div>
+        </motion.div>
       )}
 
       <div className="container mx-auto px-4 sm:px-6 text-center z-10 py-24">
         <div className="max-w-5xl mx-auto">
+          {/* Sparkle icon */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div
+              animate={{ 
+                rotate: [0, 180, 360],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Sparkles className="h-12 w-12 text-primary mx-auto mb-6" />
+            </motion.div>
+          </motion.div>
+
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 gradient-text leading-tight font-display animate-fade-in">
-            {cfg.name}
-          </h1>
+          <motion.h1 
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 font-display"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">
+              {cfg.name}
+            </span>
+          </motion.h1>
           
           {/* Role + Value Proposition */}
-          <h2 className="text-xl sm:text-2xl lg:text-3xl text-foreground mb-3 sm:mb-4 font-medium animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <motion.h2 
+            className="text-xl sm:text-2xl lg:text-3xl text-foreground mb-3 sm:mb-4 font-medium"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {cfg.title}
-          </h2>
+          </motion.h2>
           
           {/* Subheading */}
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <motion.p 
+            className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             {cfg.summary}
-          </p>
+          </motion.p>
 
           {/* Specialization Chips */}
           {cfg.chips?.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-3 mb-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <motion.div 
+              className="flex flex-wrap justify-center gap-3 mb-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               {cfg.chips.map((c, i) => (
-                <div
+                <motion.div
                   key={c.text + i}
-                  className="flex items-center bg-card/50 backdrop-blur-sm border border-border rounded-full px-4 py-2.5 text-sm font-medium hover-lift transition-all"
+                  className="flex items-center bg-card/70 backdrop-blur-xl border-2 border-primary/40 rounded-full px-4 py-2.5 text-sm font-medium shadow-lg"
+                  whileHover={{ 
+                    scale: 1.05, 
+                    borderColor: "hsl(210 100% 60%)",
+                    boxShadow: "0 0 20px hsla(210, 100%, 60%, 0.5)",
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
                 >
                   {iconForChip(c.icon)}
-                  <span>{c.text}</span>
-                </div>
+                  <span className="text-foreground">{c.text}</span>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            {cfg.ctas?.map((c) => (
-              <Button 
-                key={c.label} 
-                size="lg" 
-                className="bg-gradient-primary hover:shadow-glow text-base font-semibold px-8 transition-all duration-300"
-                onClick={() => scrollToId(c.targetId)}
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            {cfg.ctas?.map((c, i) => (
+              <motion.div
+                key={c.label}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {c.label}
-              </Button>
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-primary to-secondary hover:shadow-glow text-base font-semibold px-8 transition-all duration-300 border-0"
+                  onClick={() => scrollToId(c.targetId)}
+                >
+                  {c.label}
+                </Button>
+              </motion.div>
             ))}
-            <ResumeDownload />
-          </div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <ResumeDownload />
+            </motion.div>
+          </motion.div>
 
           {/* Social Links - Compact */}
           {cfg.socials?.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-3 mb-8 animate-fade-in" style={{ animationDelay: "0.5s" }}>
+            <motion.div 
+              className="flex flex-wrap justify-center gap-3 mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+            >
               {cfg.socials.map((s) => {
                 const Icon = s.type === "email" ? Mail : s.type === "linkedin" ? Linkedin : s.type === "github" ? Github : Mail;
                 const onClick = () => {
@@ -168,25 +282,35 @@ const Hero: React.FC = () => {
                   }
                 };
                 return (
-                  <Button 
-                    key={s.label} 
-                    variant="outline" 
-                    size="sm"
-                    className="border-border hover:border-primary/50 hover:bg-card/80 transition-all"
-                    onClick={onClick}
+                  <motion.div
+                    key={s.label}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <Icon className="h-4 w-4" />
-                  </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="border-2 border-primary/50 hover:border-primary hover:bg-primary/20 transition-all backdrop-blur-xl"
+                      onClick={onClick}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </Button>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           )}
 
           {/* Scroll Indicator */}
           {!prefersReducedMotion() && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden>
-              <ArrowDown className="h-6 w-6 text-muted-foreground" />
-            </div>
+            <motion.div 
+              className="absolute bottom-8 left-1/2 -translate-x-1/2"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden
+            >
+              <ArrowDown className="h-6 w-6 text-primary" />
+            </motion.div>
           )}
         </div>
       </div>
