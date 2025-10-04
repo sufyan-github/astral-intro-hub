@@ -1,0 +1,65 @@
+{
+  "categories": [
+    {
+      "name": "About Me",
+      "questions": [
+        {
+          "q": "What is your educational background?",
+          "a": "I am currently pursuing a Bachelor of Science in Computer Science and Engineering at Varendra University, Rajshahi, with a CGPA of 3.85/4.00 (expected graduation: March 2026)."
+        },
+        {
+          "q": "What are your main technical interests?",
+          "a": "My main interests include Machine Learning, Deep Learning, IoT, Embedded Systems, Web Development, and Mobile App Development."
+        },
+        {
+          "q": "What programming languages do you know?",
+          "a": "I'm proficient in Python, C/C++, Dart (Flutter), PHP, JavaScript, and have experience with various frameworks and technologies."
+        }
+      ]
+    },
+    {
+      "name": "Experience",
+      "questions": [
+        {
+          "q": "What work experience do you have?",
+          "a": "I have worked as a Research Assistant at Varendra University, focusing on Deep Learning and Neural Networks for Bangla Language Processing, and as an IoT Software Engineer Intern at Kaal iSolutions Ltd."
+        },
+        {
+          "q": "What projects have you worked on?",
+          "a": "I've worked on various projects including a Health Tracker app with ML-powered predictions, Traffic Sign Recognition system using CNN, Sentiment Analysis for Bangla text, and IoT-based projects."
+        }
+      ]
+    },
+    {
+      "name": "Skills & Certifications",
+      "questions": [
+        {
+          "q": "What certifications do you have?",
+          "a": "I have multiple certifications including Machine Learning (Kaggle), Deep Learning, Agile Scrum Foundation, Prompt Engineering, Python, PHP Laravel, and various other technical certifications."
+        },
+        {
+          "q": "What are your core technical skills?",
+          "a": "Machine Learning & AI (TensorFlow, PyTorch, Scikit-learn), Web Development (React, PHP Laravel), Mobile Development (Flutter), IoT & Embedded Systems (Arduino, ESP32, Raspberry Pi), and Database Management (MySQL, PostgreSQL, Supabase)."
+        }
+      ]
+    },
+    {
+      "name": "Contact & Collaboration",
+      "questions": [
+        {
+          "q": "How can I contact you?",
+          "a": "You can reach me via email at abusufyan.cse20@gmail.com or phone at +880 1580 352238. I'm also active on LinkedIn (md-abu-sufyan) and GitHub (sufyan-github)."
+        },
+        {
+          "q": "Are you available for projects or collaboration?",
+          "a": "Yes! I'm open to collaboration on ML/AI projects, IoT solutions, and web/mobile development. Feel free to reach out through the contact form or email."
+        },
+        {
+          "q": "What is your location?",
+          "a": "I'm based in Rajshahi, Bangladesh."
+        }
+      ]
+    }
+  ],
+  "systemPrompt": "You are an AI assistant for Md Abu Sufyan's portfolio website. Abu Sufyan is a Computer Science and Engineering student at Varendra University with expertise in Machine Learning, Deep Learning, IoT, and Full-Stack Development. Be helpful, professional, and friendly. Answer questions about his background, skills, projects, experience, and how to contact him. If you don't know something specific, politely say so and suggest checking the portfolio sections or contacting directly. Keep responses concise and informative."
+}

@@ -17,6 +17,7 @@ import GitHubHeatmap from "@/components/GitHubHeatmap";
 import Certifications from "@/components/Certifications";
 import Achievements from "@/components/Achievements";
 import Memberships from "@/components/Memberships";
+import { PortfolioChatbot } from "@/components/PortfolioChatbot";
 import { Toaster } from "@/components/ui/toaster";
 import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
@@ -148,6 +149,9 @@ const Index = () => {
       
       {/* Analytics Component */}
       <Analytics />
+      
+      {/* AI Chatbot */}
+      <PortfolioChatbot />
       
       {/* Toast Notifications */}
       <Toaster />

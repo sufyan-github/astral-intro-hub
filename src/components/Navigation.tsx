@@ -84,8 +84,10 @@ const Navigation: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/80 backdrop-blur-md border-b border-border shadow-card" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? "bg-background/70 backdrop-blur-xl border-b border-primary/20 shadow-[0_8px_32px_0_rgba(59,130,246,0.1)]" 
+          : "bg-gradient-to-b from-background/50 to-transparent backdrop-blur-sm"
       }`}
       aria-label="Primary"
     >
@@ -99,59 +101,66 @@ const Navigation: React.FC = () => {
 
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          {/* Logo with Tech Icon */}
+          {/* Logo with Enhanced Tech Icon */}
           <div className="flex items-center">
             <button
               onClick={() => scrollToSection("#home")}
-              className="flex items-center space-x-2 group hover-lift"
+              className="flex items-center space-x-3 group hover-lift relative"
               aria-label={`${cfg.siteTitle} — go to home`}
             >
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-primary rounded-lg blur opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative bg-gradient-primary p-2 rounded-lg">
-                  <Cpu className="h-6 w-6 text-white animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-primary rounded-xl blur-md opacity-60 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
+                <div className="relative bg-gradient-primary p-2.5 rounded-xl shadow-glow ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all">
+                  <Cpu className="h-7 w-7 text-white" />
                 </div>
               </div>
-              <span className="text-2xl font-bold gradient-text font-display">
-                MASC
-              </span>
+              <div className="flex flex-col items-start">
+                <span className="text-2xl font-bold gradient-text font-display tracking-wide">
+                  MASC
+                </span>
+                <span className="text-[10px] text-muted-foreground font-medium tracking-widest uppercase">
+                  Portfolio
+                </span>
+              </div>
             </button>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+          {/* Desktop Navigation with Glassmorphism */}
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {(cfg.items || []).map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative transition-colors duration-200 hover-lift text-sm xl:text-base ${
+                className={`relative px-4 py-2 rounded-lg transition-all duration-300 text-sm xl:text-base font-medium group ${
                   isActive(item.href)
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "text-primary bg-primary/10 shadow-glow"
+                    : "text-muted-foreground hover:text-primary hover:bg-muted/50"
                 }`}
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
                 {item.name}
-                {/* active underline */}
-                <span
-                  className={`absolute left-0 -bottom-1 h-0.5 bg-primary transition-all duration-300 ${
-                    isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                />
+                {/* Enhanced active indicator */}
+                {isActive(item.href) && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-primary rounded-full" />
+                )}
               </button>
             ))}
 
             {cfg.cvUrl && (
-              <Button asChild size="sm" className="bg-gradient-primary hover:shadow-glow ml-2">
+              <Button 
+                asChild 
+                size="sm" 
+                className="bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all ml-3 xl:ml-4 rounded-full shadow-lg"
+              >
                 <a href={cfg.cvUrl} download={cfg.cvFileName || undefined}>
                   <Download className="h-4 w-4 mr-2" />
-                  CV
+                  <span className="font-semibold">Download CV</span>
                 </a>
               </Button>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Enhanced Mobile Menu Button */}
           <div className="lg:hidden">
             <Button
               aria-expanded={isMobileMenuOpen}
@@ -159,32 +168,32 @@ const Navigation: React.FC = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsMobileMenuOpen((v) => !v)}
-              className="glow-border"
+              className="relative bg-gradient-primary/10 backdrop-blur-sm hover:bg-gradient-primary/20 border border-primary/20 rounded-lg"
             >
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMobileMenuOpen ? <X className="h-5 w-5 text-primary" /> : <Menu className="h-5 w-5 text-primary" />}
               <span className="sr-only">{isMobileMenuOpen ? "Close" : "Open"} menu</span>
             </Button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Enhanced Mobile Menu with Glassmorphism */}
         {isMobileMenuOpen && (
           <div
             id="primary-mobile-menu"
             ref={mobileMenuRef}
-            className="lg:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border shadow-card animate-slide-up"
+            className="lg:hidden absolute top-16 left-0 right-0 bg-background/90 backdrop-blur-2xl border-b border-primary/20 shadow-2xl animate-slide-up"
             role="dialog"
             aria-modal="true"
           >
-            <div className="px-6 py-4 space-y-2">
+            <div className="px-6 py-6 space-y-2">
               {(cfg.items || []).map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
-                  className={`block w-full text-left transition-colors duration-200 py-2 rounded ${
+                  className={`block w-full text-left transition-all duration-200 py-3 px-4 rounded-lg font-medium ${
                     isActive(item.href)
-                      ? "text-primary bg-primary/5"
-                      : "text-muted-foreground hover:text-primary"
+                      ? "text-primary bg-gradient-primary/10 shadow-glow border border-primary/30"
+                      : "text-muted-foreground hover:text-primary hover:bg-muted/50"
                   }`}
                 >
                   {item.name}
@@ -192,7 +201,11 @@ const Navigation: React.FC = () => {
               ))}
 
               {cfg.cvUrl && (
-                <Button asChild size="sm" className="w-full bg-gradient-primary hover:shadow-glow mt-4">
+                <Button 
+                  asChild 
+                  size="sm" 
+                  className="w-full bg-gradient-primary hover:shadow-glow mt-4 rounded-full shadow-lg font-semibold"
+                >
                   <a href={cfg.cvUrl} download={cfg.cvFileName || undefined}>
                     <Download className="h-4 w-4 mr-2" /> Download CV
                   </a>
