@@ -18,6 +18,8 @@ import Certifications from "@/components/Certifications";
 import Achievements from "@/components/Achievements";
 import Memberships from "@/components/Memberships";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { BackToTop } from "@/components/BackToTop";
 import { Toaster } from "@/components/ui/toaster";
 import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
@@ -43,6 +45,9 @@ const Index = () => {
       {/* Floating Tech Elements */}
       <FloatingTechElements />
       
+      {/* Scroll Progress Bar */}
+      <ScrollProgress />
+      
       {/* Content */}
       <div className="relative z-10">
         <Navigation />
@@ -50,20 +55,44 @@ const Index = () => {
           <div id="home">
             <Hero />
           </div>
-          <About />
-          <LanguagesSkills />
-          <Academic />
-          <Experience />
-          <Skills />
-          <GitHubHeatmap />
-          <Certifications />
-          <Achievements />
-          <Memberships />
-          <Projects />
-          <Research />
-          <Blog />
-          <Testimonials />
-          <Contact />
+          <div id="about">
+            <About />
+          </div>
+          <div id="academic">
+            <Academic />
+          </div>
+          <div id="experience">
+            <Experience />
+          </div>
+          <div id="skills">
+            <Skills />
+            <LanguagesSkills />
+            <GitHubHeatmap />
+          </div>
+          <div id="projects">
+            <Projects />
+          </div>
+          <div id="research">
+            <Research />
+          </div>
+          <div id="certifications">
+            <Certifications />
+          </div>
+          <div id="achievements">
+            <Achievements />
+          </div>
+          <div id="memberships">
+            <Memberships />
+          </div>
+          <div id="articles">
+            <Blog />
+          </div>
+          <div id="testimonials">
+            <Testimonials />
+          </div>
+          <div id="contact">
+            <Contact />
+          </div>
         </main>
         
         {/* Footer */}
@@ -152,6 +181,9 @@ const Index = () => {
       
       {/* AI Chatbot */}
       <PortfolioChatbot />
+      
+      {/* Back to Top Button */}
+      <BackToTop />
       
       {/* Toast Notifications */}
       <Toaster />

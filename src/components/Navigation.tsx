@@ -126,12 +126,12 @@ const Navigation: React.FC = () => {
           </div>
 
           {/* Desktop Navigation with Glassmorphism */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          <div className="hidden lg:flex items-center space-x-2">
             {(cfg.items || []).map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative px-4 py-2 rounded-lg transition-all duration-300 text-sm xl:text-base font-medium group ${
+                className={`relative px-3 py-2 rounded-lg transition-all duration-300 text-sm font-medium group ${
                   isActive(item.href)
                     ? "text-primary bg-primary/10 shadow-glow"
                     : "text-muted-foreground hover:text-primary hover:bg-muted/50"
@@ -145,19 +145,6 @@ const Navigation: React.FC = () => {
                 )}
               </button>
             ))}
-
-            {cfg.cvUrl && (
-              <Button 
-                asChild 
-                size="sm" 
-                className="bg-gradient-primary hover:shadow-glow hover:scale-105 transition-all ml-3 xl:ml-4 rounded-full shadow-lg"
-              >
-                <a href={cfg.cvUrl} download={cfg.cvFileName || undefined}>
-                  <Download className="h-4 w-4 mr-2" />
-                  <span className="font-semibold">Download CV</span>
-                </a>
-              </Button>
-            )}
           </div>
 
           {/* Enhanced Mobile Menu Button */}
@@ -199,18 +186,6 @@ const Navigation: React.FC = () => {
                   {item.name}
                 </button>
               ))}
-
-              {cfg.cvUrl && (
-                <Button 
-                  asChild 
-                  size="sm" 
-                  className="w-full bg-gradient-primary hover:shadow-glow mt-4 rounded-full shadow-lg font-semibold"
-                >
-                  <a href={cfg.cvUrl} download={cfg.cvFileName || undefined}>
-                    <Download className="h-4 w-4 mr-2" /> Download CV
-                  </a>
-                </Button>
-              )}
             </div>
           </div>
         )}
