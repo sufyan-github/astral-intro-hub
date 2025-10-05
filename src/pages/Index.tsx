@@ -20,6 +20,8 @@ import Memberships from "@/components/Memberships";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { BackToTop } from "@/components/BackToTop";
+import Gallery from "@/components/Gallery";
+import CodingProfiles from "@/components/CodingProfiles";
 import { Toaster } from "@/components/ui/toaster";
 import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
@@ -83,6 +85,12 @@ const Index = () => {
           </div>
           <div id="memberships">
             <Memberships />
+          </div>
+          <div id="coding">
+            <CodingProfiles />
+          </div>
+          <div id="gallery">
+            <Gallery />
           </div>
           <div id="articles">
             <Blog />

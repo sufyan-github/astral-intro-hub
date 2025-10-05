@@ -70,6 +70,54 @@ All colors MUST be HSL.
     /* Explicit dark mode with vibrant blue theme */
     --background: 220 20% 12%;
     --foreground: 0 0% 100%;
+    
+    --card: 220 25% 18%;
+    --card-foreground: 0 0% 100%;
+    
+    --popover: 220 25% 18%;
+    --popover-foreground: 0 0% 100%;
+    
+    --primary: 210 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 190 80% 50%;
+    --secondary-foreground: 220 20% 12%;
+    
+    --muted: 220 15% 25%;
+    --muted-foreground: 210 20% 75%;
+    
+    --accent: 270 70% 60%;
+    --accent-foreground: 0 0% 100%;
+    
+    --border: 210 40% 35%;
+  }
+  
+  :root:not(.dark) {
+    /* Light mode */
+    --background: 0 0% 100%;
+    --foreground: 220 20% 12%;
+    
+    --card: 0 0% 98%;
+    --card-foreground: 220 20% 12%;
+    
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 20% 12%;
+    
+    --primary: 210 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 190 80% 40%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 15% 40%;
+    
+    --accent: 270 70% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --border: 220 15% 85%;
+    --input: 220 15% 92%;
+    --ring: 210 100% 50%;
   }
 }
 

@@ -1,0 +1,42 @@
+{
+  "title": "Gallery & Events",
+  "subtitle": "Moments from hackathons, workshops, and tech community events",
+  "events": [
+    {
+      "id": "ev01",
+      "title": "ICCiT 2024 Conference",
+      "description": "Presented two research papers on sentiment analysis and health analytics at the International Conference on Computer and Information Technology",
+      "date": "December 2024",
+      "location": "Cox's Bazar, Bangladesh",
+      "category": "Conference",
+      "image": "/gallery/iccit-2024.jpg"
+    },
+    {
+      "id": "ev02",
+      "title": "AI/ML Workshop",
+      "description": "Conducted hands-on workshop on Machine Learning fundamentals and practical implementation for students",
+      "date": "November 2024",
+      "location": "RUET Campus",
+      "category": "Workshop",
+      "image": "/gallery/ml-workshop.jpg"
+    },
+    {
+      "id": "ev03",
+      "title": "IoT Project Exhibition",
+      "description": "Showcased IoT-based smart solutions at the university tech fair",
+      "date": "October 2024",
+      "location": "RUET Tech Fair",
+      "category": "Exhibition",
+      "image": "/gallery/iot-expo.jpg"
+    },
+    {
+      "id": "ev04",
+      "title": "Hackathon Participation",
+      "description": "Team collaboration on AI-powered solutions at the regional hackathon",
+      "date": "September 2024",
+      "location": "Dhaka, Bangladesh",
+      "category": "Hackathon",
+      "image": "/gallery/hackathon.jpg"
+    }
+  ]
+}

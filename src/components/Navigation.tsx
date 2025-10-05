@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X, Download, Cpu } from "lucide-react";
 
 // =====================================================
@@ -145,10 +146,14 @@ const Navigation: React.FC = () => {
                 )}
               </button>
             ))}
+            
+            {/* Theme Toggle */}
+            <ThemeToggle />
           </div>
 
-          {/* Enhanced Mobile Menu Button */}
-          <div className="lg:hidden">
+          {/* Enhanced Mobile Menu Button & Theme Toggle */}
+          <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle />
             <Button
               aria-expanded={isMobileMenuOpen}
               aria-controls="primary-mobile-menu"

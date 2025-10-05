@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail, Brain, Cpu, Database, Sparkles } from "lucide-react";
 import Lottie from "lottie-react";
+import { TypeAnimation } from "react-type-animation";
 import ResumeDownload from "@/components/ResumeDownload";
 import heroData from "@/data/hero.json";
 
@@ -160,20 +161,24 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto px-4 sm:px-6 text-center z-10 py-24">
         <div className="max-w-5xl mx-auto">
-          {/* Sparkle icon */}
+          {/* Profile Picture */}
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
+            className="mb-8"
           >
             <motion.div
-              animate={{ 
-                rotate: [0, 180, 360],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-32 h-32 mx-auto"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3 }}
             >
-              <Sparkles className="h-12 w-12 text-primary mx-auto mb-6" />
+              <div className="absolute inset-0 bg-gradient-primary rounded-full blur-xl opacity-50 animate-pulse" />
+              <div className="relative w-full h-full rounded-full bg-gradient-primary p-1 shadow-glow">
+                <div className="w-full h-full rounded-full bg-card flex items-center justify-center overflow-hidden">
+                  <Sparkles className="h-16 w-16 text-primary" />
+                </div>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -189,15 +194,32 @@ const Hero: React.FC = () => {
             </span>
           </motion.h1>
           
-          {/* Role + Value Proposition */}
-          <motion.h2 
-            className="text-xl sm:text-2xl lg:text-3xl text-foreground mb-3 sm:mb-4 font-medium"
+          {/* Animated Typing Effect */}
+          <motion.div
+            className="text-xl sm:text-2xl lg:text-3xl text-foreground mb-3 sm:mb-4 font-medium min-h-[2.5rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {cfg.title}
-          </motion.h2>
+            <TypeAnimation
+              sequence={[
+                "Machine Learning Engineer",
+                2000,
+                "AI Instructor",
+                2000,
+                "Full-Stack Developer",
+                2000,
+                "IoT Enthusiast",
+                2000,
+                "Computer Vision Researcher",
+                2000,
+              ]}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
+              className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent"
+            />
+          </motion.div>
           
           {/* Subheading */}
           <motion.p 
