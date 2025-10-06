@@ -9,7 +9,11 @@
       "date": "December 2024",
       "location": "Cox's Bazar, Bangladesh",
       "category": "Conference",
-      "image": "/gallery/iccit-2024.jpg"
+      "images": [
+        "/gallery/iccit-2024-1.jpg",
+        "/gallery/iccit-2024-2.jpg",
+        "/gallery/iccit-2024-3.jpg"
+      ]
     },
     {
       "id": "ev02",
@@ -18,7 +22,11 @@
       "date": "November 2024",
       "location": "RUET Campus",
       "category": "Workshop",
-      "image": "/gallery/ml-workshop.jpg"
+      "images": [
+        "/gallery/ml-workshop-1.jpg",
+        "/gallery/ml-workshop-2.jpg",
+        "/gallery/ml-workshop-3.jpg"
+      ]
     },
     {
       "id": "ev03",
@@ -27,7 +35,11 @@
       "date": "October 2024",
       "location": "RUET Tech Fair",
       "category": "Exhibition",
-      "image": "/gallery/iot-expo.jpg"
+      "images": [
+        "/gallery/iot-expo-1.jpg",
+        "/gallery/iot-expo-2.jpg",
+        "/gallery/iot-expo-3.jpg"
+      ]
     },
     {
       "id": "ev04",
@@ -36,7 +48,11 @@
       "date": "September 2024",
       "location": "Dhaka, Bangladesh",
       "category": "Hackathon",
-      "image": "/gallery/hackathon.jpg"
+      "images": [
+        "/gallery/hackathon-1.jpg",
+        "/gallery/hackathon-2.jpg",
+        "/gallery/hackathon-3.jpg"
+      ]
     }
   ]
 }

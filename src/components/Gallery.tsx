@@ -19,7 +19,7 @@ interface Event {
   date: string;
   location: string;
   category: string;
-  image: string;
+  images: string[];
 }
 
 const getCategoryColor = (category: string) => {
@@ -102,42 +102,73 @@ const Gallery = () => {
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Card className="group overflow-hidden bg-card/80 backdrop-blur-xl border-2 border-primary/20 hover:border-primary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 h-full">
-                      {/* Event Image Placeholder */}
-                      <div className="relative w-full h-56 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20">
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"
-                          animate={{
-                            opacity: [0.3, 0.6, 0.3],
-                            scale: [1, 1.1, 1],
-                          }}
-                          transition={{
-                            duration: 5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        />
-                        <Badge className={`absolute top-4 right-4 ${getCategoryColor(event.category)} border-2 z-10`}>
+                    <Card className="group overflow-hidden bg-card/80 backdrop-blur-xl border-2 border-primary/20 hover:border-primary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 h-full flex flex-col">
+                      {/* Title and Badge */}
+                      <div className="p-4 pb-2 flex items-start justify-between">
+                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors flex-1 pr-2">
+                          {event.title}
+                        </h3>
+                        <Badge className={`${getCategoryColor(event.category)} border-2 shrink-0`}>
                           {event.category}
                         </Badge>
                       </div>
 
-                      <CardContent className="p-6">
-                        <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
-                          {event.title}
-                        </h3>
+                      {/* Nested Images Carousel */}
+                      <div className="relative w-full">
+                        <Carousel
+                          opts={{
+                            align: "center",
+                            loop: true,
+                          }}
+                          plugins={[
+                            Autoplay({
+                              delay: 3000,
+                              stopOnInteraction: false,
+                            }),
+                          ]}
+                          className="w-full"
+                        >
+                          <CarouselContent>
+                            {event.images.map((image, idx) => (
+                              <CarouselItem key={idx}>
+                                <div className="relative w-full h-56 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20">
+                                  <motion.div
+                                    className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"
+                                    animate={{
+                                      opacity: [0.3, 0.6, 0.3],
+                                      scale: [1, 1.05, 1],
+                                    }}
+                                    transition={{
+                                      duration: 4,
+                                      repeat: Infinity,
+                                      ease: "easeInOut",
+                                    }}
+                                  />
+                                  <div className="absolute inset-0 flex items-center justify-center text-primary/40 font-semibold text-sm">
+                                    Photo {idx + 1} of {event.images.length}
+                                  </div>
+                                </div>
+                              </CarouselItem>
+                            ))}
+                          </CarouselContent>
+                          <CarouselPrevious className="left-2 h-8 w-8 border-primary/50 bg-background/90 backdrop-blur-sm hover:bg-primary/20" />
+                          <CarouselNext className="right-2 h-8 w-8 border-primary/50 bg-background/90 backdrop-blur-sm hover:bg-primary/20" />
+                        </Carousel>
+                      </div>
 
-                        <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
+                      {/* Event Info */}
+                      <CardContent className="p-4 pt-3 flex-1 flex flex-col">
+                        <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3 flex-1">
                           {event.description}
                         </p>
 
                         <div className="flex flex-col gap-2 text-sm text-muted-foreground">
                           <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-primary" />
+                            <Calendar className="h-4 w-4 text-primary shrink-0" />
                             <span>{event.date}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-primary" />
+                            <MapPin className="h-4 w-4 text-primary shrink-0" />
                             <span>{event.location}</span>
                           </div>
                         </div>
