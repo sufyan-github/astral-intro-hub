@@ -150,10 +150,10 @@ export const PortfolioChatbot: React.FC = () => {
         <Button
           onClick={() => setIsOpen(true)}
           size="lg"
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-glow bg-gradient-primary hover:scale-110 transition-transform z-50 group"
+          className="fixed bottom-6 right-6 h-12 w-12 rounded-full shadow-glow bg-gradient-primary hover:scale-110 transition-transform z-50 group"
           aria-label="Open AI Assistant"
         >
-          <MessageCircle className="h-6 w-6 text-white" />
+          <MessageCircle className="h-5 w-5 text-white" />
           <Sparkles className="absolute -top-1 -right-1 h-4 w-4 text-yellow-300 animate-pulse" />
         </Button>
       )}

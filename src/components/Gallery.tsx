@@ -1,8 +1,16 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Image as ImageIcon } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import galleryData from "@/data/gallery.json";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface Event {
   id: string;
@@ -31,23 +39,6 @@ const getCategoryColor = (category: string) => {
 
 const Gallery = () => {
   const events = galleryData.events as Event[];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
 
   return (
     <section className="py-20 bg-gradient-secondary relative overflow-hidden">
@@ -82,59 +73,83 @@ const Gallery = () => {
           </p>
         </motion.div>
 
-        {/* Events Grid */}
+        {/* Events Carousel */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          className="max-w-5xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          {events.map((event) => (
-            <motion.div
-              key={event.id}
-              variants={cardVariants}
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Card className="group overflow-hidden bg-card/80 backdrop-blur-xl border-2 border-primary/20 hover:border-primary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 h-full">
-                {/* Event Image */}
-                <div className="relative w-full h-64 overflow-hidden bg-muted/30 flex items-center justify-center">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+                stopOnInteraction: true,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent>
+              {events.map((event) => (
+                <CarouselItem key={event.id} className="md:basis-1/2 lg:basis-1/2">
                   <motion.div
-                    className="text-primary/30"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
+                    className="p-2 h-full"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <ImageIcon className="h-20 w-20" />
+                    <Card className="group overflow-hidden bg-card/80 backdrop-blur-xl border-2 border-primary/20 hover:border-primary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 h-full">
+                      {/* Event Image Placeholder */}
+                      <div className="relative w-full h-56 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20">
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"
+                          animate={{
+                            opacity: [0.3, 0.6, 0.3],
+                            scale: [1, 1.1, 1],
+                          }}
+                          transition={{
+                            duration: 5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        />
+                        <Badge className={`absolute top-4 right-4 ${getCategoryColor(event.category)} border-2 z-10`}>
+                          {event.category}
+                        </Badge>
+                      </div>
+
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
+                          {event.title}
+                        </h3>
+
+                        <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
+                          {event.description}
+                        </p>
+
+                        <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4 text-primary" />
+                            <span>{event.date}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4 text-primary" />
+                            <span>{event.location}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </motion.div>
-                  <Badge className={`absolute top-4 right-4 ${getCategoryColor(event.category)} border-2`}>
-                    {event.category}
-                  </Badge>
-                </div>
-
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
-                    {event.title}
-                  </h3>
-
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
-                    {event.description}
-                  </p>
-
-                  <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-primary" />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-primary" />
-                      <span>{event.location}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-2 border-primary/50 bg-background/80 backdrop-blur-sm hover:bg-primary/20" />
+            <CarouselNext className="right-2 border-primary/50 bg-background/80 backdrop-blur-sm hover:bg-primary/20" />
+          </Carousel>
         </motion.div>
       </div>
     </section>
