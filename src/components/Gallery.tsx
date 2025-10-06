@@ -1,7 +1,8 @@
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import galleryData from "@/data/gallery.json";
 import {
   Carousel,
@@ -39,6 +40,53 @@ const getCategoryColor = (category: string) => {
 
 const Gallery = () => {
   const events = galleryData.events as Event[];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (isHovered || events.length === 0) {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+      return;
+    }
+
+    autoPlayRef.current = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % events.length);
+    }, 4000); // 4 seconds
+
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isHovered, events.length]);
+
+  const nextEvent = () => {
+    setCurrentIndex((prev) => (prev + 1) % events.length);
+  };
+
+  const prevEvent = () => {
+    setCurrentIndex((prev) => (prev - 1 + events.length) % events.length);
+  };
+
+  const getVisibleEvents = () => {
+    const visible = [];
+    const totalEvents = events.length;
+    
+    // Show 5 events: 2 left + 1 center + 2 right
+    for (let i = -2; i <= 2; i++) {
+      const index = (currentIndex + i + totalEvents) % totalEvents;
+      visible.push({
+        event: events[index],
+        position: i,
+        index
+      });
+    }
+    return visible;
+  };
 
   return (
     <section className="py-20 bg-gradient-secondary relative overflow-hidden">
@@ -73,115 +121,165 @@ const Gallery = () => {
           </p>
         </motion.div>
 
-        {/* Events Carousel */}
-        <motion.div
-          className="max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        {/* 3D Curved Carousel */}
+        <div 
+          className="relative h-[600px] flex items-center justify-center perspective-1000 overflow-hidden"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            plugins={[
-              Autoplay({
-                delay: 4000,
-                stopOnInteraction: true,
-              }),
-            ]}
-            className="w-full"
-          >
-            <CarouselContent>
-              {events.map((event) => (
-                <CarouselItem key={event.id} className="md:basis-1/2 lg:basis-1/2">
-                  <motion.div
-                    className="p-2 h-full"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Card className="group overflow-hidden bg-card/80 backdrop-blur-xl border-2 border-primary/20 hover:border-primary/60 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 h-full flex flex-col">
-                      {/* Title and Badge */}
-                      <div className="p-4 pb-2 flex items-start justify-between">
-                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors flex-1 pr-2">
-                          {event.title}
-                        </h3>
-                        <Badge className={`${getCategoryColor(event.category)} border-2 shrink-0`}>
-                          {event.category}
-                        </Badge>
-                      </div>
+          <div className="relative w-full h-full flex items-center justify-center">
+            {getVisibleEvents().map(({ event, position, index }) => {
+              const isCenter = position === 0;
+              const isVisible = Math.abs(position) <= 2;
+              
+              if (!isVisible) return null;
 
-                      {/* Nested Images Carousel */}
-                      <div className="relative w-full">
-                        <Carousel
-                          opts={{
-                            align: "center",
-                            loop: true,
-                          }}
-                          plugins={[
-                            Autoplay({
-                              delay: 3000,
-                              stopOnInteraction: false,
-                            }),
-                          ]}
-                          className="w-full"
-                        >
-                          <CarouselContent>
-                            {event.images.map((image, idx) => (
-                              <CarouselItem key={idx}>
-                                <div className="relative w-full h-56 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20">
-                                  <motion.div
-                                    className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"
-                                    animate={{
-                                      opacity: [0.3, 0.6, 0.3],
-                                      scale: [1, 1.05, 1],
-                                    }}
-                                    transition={{
-                                      duration: 4,
-                                      repeat: Infinity,
-                                      ease: "easeInOut",
-                                    }}
-                                  />
-                                  <div className="absolute inset-0 flex items-center justify-center text-primary/40 font-semibold text-sm">
-                                    Photo {idx + 1} of {event.images.length}
-                                  </div>
+              // 3D Curved positioning
+              const angle = position * 28; // Degrees
+              const radius = 350; // Distance from center
+              const translateX = Math.sin((angle * Math.PI) / 180) * radius;
+              const translateZ = Math.cos((angle * Math.PI) / 180) * radius - radius;
+              const rotateY = -angle;
+              const scale = isCenter ? 1 : 0.8 - Math.abs(position) * 0.08;
+              const opacity = isCenter ? 1 : 0.65 - Math.abs(position) * 0.12;
+              
+              return (
+                <div
+                  key={`${event.id}-${index}`}
+                  className={`absolute transition-all duration-700 ease-out cursor-pointer ${
+                    isCenter ? 'z-30' : 'z-10'
+                  }`}
+                  style={{
+                    transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+                    opacity,
+                  }}
+                  onClick={() => {
+                    if (!isCenter) {
+                      if (position > 0) {
+                        nextEvent();
+                      } else {
+                        prevEvent();
+                      }
+                    }
+                  }}
+                >
+                  <Card className={`w-[420px] h-[520px] overflow-hidden bg-card/80 backdrop-blur-xl border-2 border-primary/20 hover:border-primary/60 transition-all duration-300 flex flex-col ${
+                    isCenter ? 'shadow-2xl shadow-primary/30' : 'shadow-lg shadow-black/10'
+                  }`}>
+                    {/* Title and Badge */}
+                    <div className="p-4 pb-2 flex items-start justify-between border-b border-border/50">
+                      <h3 className={`${isCenter ? 'text-lg' : 'text-base'} font-bold text-foreground line-clamp-2 flex-1 pr-2`}>
+                        {event.title}
+                      </h3>
+                      <Badge className={`${getCategoryColor(event.category)} border-2 shrink-0`}>
+                        {event.category}
+                      </Badge>
+                    </div>
+
+                    {/* Nested Images Carousel */}
+                    <div className="relative w-full flex-shrink-0">
+                      <Carousel
+                        opts={{
+                          align: "center",
+                          loop: true,
+                        }}
+                        plugins={[
+                          Autoplay({
+                            delay: 3000,
+                            stopOnInteraction: false,
+                          }),
+                        ]}
+                        className="w-full"
+                      >
+                        <CarouselContent>
+                          {event.images.map((image, idx) => (
+                            <CarouselItem key={idx}>
+                              <div className="relative w-full h-52 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20">
+                                <motion.div
+                                  className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"
+                                  animate={{
+                                    opacity: [0.3, 0.6, 0.3],
+                                    scale: [1, 1.05, 1],
+                                  }}
+                                  transition={{
+                                    duration: 4,
+                                    repeat: Infinity,
+                                    ease: "easeInOut",
+                                  }}
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center text-primary/40 font-semibold text-sm">
+                                  Photo {idx + 1} of {event.images.length}
                                 </div>
-                              </CarouselItem>
-                            ))}
-                          </CarouselContent>
-                          <CarouselPrevious className="left-2 h-8 w-8 border-primary/50 bg-background/90 backdrop-blur-sm hover:bg-primary/20" />
-                          <CarouselNext className="right-2 h-8 w-8 border-primary/50 bg-background/90 backdrop-blur-sm hover:bg-primary/20" />
-                        </Carousel>
-                      </div>
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        {isCenter && (
+                          <>
+                            <CarouselPrevious className="left-2 h-7 w-7 border-primary/50 bg-background/90 backdrop-blur-sm hover:bg-primary/20" />
+                            <CarouselNext className="right-2 h-7 w-7 border-primary/50 bg-background/90 backdrop-blur-sm hover:bg-primary/20" />
+                          </>
+                        )}
+                      </Carousel>
+                    </div>
 
-                      {/* Event Info */}
-                      <CardContent className="p-4 pt-3 flex-1 flex flex-col">
-                        <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3 flex-1">
-                          {event.description}
-                        </p>
+                    {/* Event Info */}
+                    <CardContent className="p-4 flex-1 flex flex-col">
+                      <p className={`text-muted-foreground ${isCenter ? 'text-sm' : 'text-xs'} leading-relaxed line-clamp-3 mb-4 flex-1`}>
+                        {event.description}
+                      </p>
 
-                        <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-primary shrink-0" />
-                            <span>{event.date}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4 text-primary shrink-0" />
-                            <span>{event.location}</span>
-                          </div>
+                      <div className={`flex flex-col gap-2 ${isCenter ? 'text-sm' : 'text-xs'} text-muted-foreground`}>
+                        <div className="flex items-center gap-2">
+                          <Calendar className={`${isCenter ? 'h-4 w-4' : 'h-3 w-3'} text-primary shrink-0`} />
+                          <span>{event.date}</span>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2 border-primary/50 bg-background/80 backdrop-blur-sm hover:bg-primary/20" />
-            <CarouselNext className="right-2 border-primary/50 bg-background/80 backdrop-blur-sm hover:bg-primary/20" />
-          </Carousel>
-        </motion.div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className={`${isCenter ? 'h-4 w-4' : 'h-3 w-3'} text-primary shrink-0`} />
+                          <span>{event.location}</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Navigation buttons */}
+          <button
+            onClick={prevEvent}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-all"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            onClick={nextEvent}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg hover:bg-background transition-all"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </div>
+
+        {/* Dots indicator */}
+        <div className="flex justify-center mt-6 space-x-1">
+          {events.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 rounded-full transition-colors ${
+                index === currentIndex ? 'bg-primary' : 'bg-primary/30 hover:bg-primary/50'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Event count */}
+        <div className="text-center mt-4">
+          <p className="text-sm text-muted-foreground">
+            {currentIndex + 1} of {events.length} events
+          </p>
+        </div>
       </div>
     </section>
   );
