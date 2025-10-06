@@ -44,25 +44,31 @@ const Gallery = () => {
   const [isHovered, setIsHovered] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto-play functionality
+  // Auto-play functionality - wait for all images to cycle before moving to next event
   useEffect(() => {
     if (isHovered || events.length === 0) {
       if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current);
+        clearTimeout(autoPlayRef.current);
       }
       return;
     }
 
-    autoPlayRef.current = setInterval(() => {
+    // Calculate delay based on number of images in current event
+    // Each image shows for 3 seconds, so total delay = images * 3000ms
+    const currentEvent = events[currentIndex];
+    const imageCount = currentEvent?.images?.length || 1;
+    const totalDelay = imageCount * 3000; // 3 seconds per image
+
+    autoPlayRef.current = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % events.length);
-    }, 4000); // 4 seconds
+    }, totalDelay);
 
     return () => {
       if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current);
+        clearTimeout(autoPlayRef.current);
       }
     };
-  }, [isHovered, events.length]);
+  }, [isHovered, events.length, currentIndex, events]);
 
   const nextEvent = () => {
     setCurrentIndex((prev) => (prev + 1) % events.length);
